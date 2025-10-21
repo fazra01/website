@@ -1,0 +1,709 @@
+/* =========================================================
+   FADI AZRA — MAIN.CSS
+   One shared stylesheet for: About, Artist Statement,
+   Painting Series, Stop-Motion, Moroccan Lamp, MSI, Corpse Bride
+   ========================================================= */
+
+/* ---------- Theme / Base ---------- */
+:root{
+  --content: min(92vw, 1100px);
+  --maxw: 1100px;
+  --bg: #f8f3ef;
+  --fg: #0a0a0a;
+  --muted: #5a5a5a;
+  --accent: #b36a70; /* pink */
+  --line: rgba(0,0,0,.12);
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; }
+body{
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  font-family: "Inter", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,h2,h3{ font-family: "Playfair Display", Georgia, serif; font-weight:700; }
+.subhead,.subtitle{ font-family:"Playfair Display", Georgia, serif; font-style:italic; color:rgba(0,0,0,.5); }
+
+a{ color:inherit; text-decoration: underline; text-underline-offset:2px; }
+
+/* Accent links (buttons, footer links, inline nav) */
+.btn,.links a,.footer-link{
+  display:inline-block; padding:0; border:0; background:none;
+  font-family:"Playfair Display", Georgia, serif; font-weight:600;
+  color: var(--accent); text-decoration:none; transition: color .25s ease;
+}
+.btn:hover,.links a:hover,.footer-link:hover{ color:#000; text-decoration: underline; }
+
+/* ---------- Header / Page intro ---------- */
+header.hero{
+  padding: 8vh 0 6vh;
+  width: min(92vw, var(--maxw));
+  margin-inline: auto;
+}
+header.hero h1{
+  font-size: clamp(28px, 4vw, 48px);
+  margin:0; line-height:1.05; text-align:left;
+}
+header.hero .subhead{ font-size: clamp(14px, 1.8vw, 20px); margin-top:.3rem; text-align:left; }
+
+/* Generic section/wrap widths */
+.wrap, .section, .intro, section.statement{ width:min(92vw,var(--maxw)); margin-inline:auto; }
+
+/* ---------- Artist Statement (2-column copy) ---------- */
+section.statement{ padding: 2rem 0 2.5rem; }
+.statement .copy{
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:1.05rem; line-height:1.7; text-align:justify; color:var(--fg);
+  column-count:2; column-gap:3rem; column-fill:balance;
+}
+.statement .copy p{ margin:0 0 1.2em; break-inside:avoid; }
+.statement .copy p:nth-child(odd){ text-indent:1rem; }
+.statement .copy p:nth-child(even){ margin-left:1.5rem; }
+.statement .copy p + p::before{
+  content:""; display:block; height:.25rem; width:2.25rem; margin:.4rem 0 .6rem;
+  background: linear-gradient(to right, rgba(0,0,0,.12), rgba(0,0,0,0));
+}
+@media (max-width:800px){
+  .statement .copy{ column-count:1; column-gap:0; }
+  .statement .copy p:nth-child(even){ margin-left:0; }
+}
+
+/* ---------- Project Cards / Galleries (Painting, MSI, Corpse Bride) ---------- */
+.art-card{ position:relative; margin-bottom:16vh; }
+
+.art-title{
+  text-align:center; margin:3rem auto 1.5rem; width:100%;
+  font-family:"Playfair Display", Georgia, serif; font-weight:600;
+  font-size: clamp(18px, 2.4vw, 28px); line-height:1.2; color: var(--accent);
+}
+
+/* Safe single-media container (no flex/grid so images behave consistently) */
+.art-media{
+  position:relative; width: var(--content); margin-inline:auto;
+  background:#fff; overflow:hidden;
+}
+.art-img{ width:100%; height:auto; display:block; object-fit:contain; border:0; background:none; }
+
+/* Allow videos inside .art-media */
+.art-media iframe{ width:100%; aspect-ratio:16/9; display:block; border:0; }
+
+/* Info area under media */
+.art-info{ position:static; margin:1rem auto 0; width:var(--content); background:none; border:0; padding:0; }
+
+.art-meta{
+  display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;
+  font-family:"Playfair Display", Georgia, serif; font-size:1rem; letter-spacing:.02em; color:var(--muted);
+}
+.art-meta-left,.art-meta-right{ display:flex; flex-direction:column; gap:.25rem; }
+.art-meta-right{ text-align:right; align-items:flex-end; }
+
+.art-desc, .intro-copy, .bio p, figcaption{
+  font-family:"Playfair Display", Georgia, serif; font-size:1.05rem; line-height:1.7;
+}
+hr.divider{ border:0; border-top:1px solid #ccc; margin:7vh auto; width:60vw; }
+
+/* Image grids used across MSI/Corpse Bride */
+.art-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+  width: min(92vw, var(--maxw));
+  margin: 0 auto 2.5rem;
+  justify-items: center;
+}
+.art-grid img{ width:100%; height:auto; object-fit:cover; background:#fff; }
+.art-grid figure{ width:100%; margin:0; }
+.art-grid figcaption{ font-size:.9rem; color:#5a5a5a; text-align:center; margin-top:.4rem; }
+
+/* ---------- Corpse Bride & MSI intro rows (two images etc.) ---------- */
+.intro{ margin: 3vh auto 7vh; }
+.intro-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.2rem;
+  justify-items: center;
+}
+.intro-grid img{ width:100%; height:auto; object-fit:cover; border-radius:0; background:#fff; }
+.intro-text{ font-family:"Playfair Display", Georgia, serif; font-size:1.05rem; line-height:1.7; text-align:justify; margin:1.2rem 0 3rem; }
+
+/* ---------- Stop-Motion ---------- */
+.wrap{ padding: 8vh 0 6vh; }
+header.wrapless{ margin-bottom:40px; } /* noop helper if needed */
+
+h2{ color: var(--accent); font-size: clamp(22px, 3vw, 28px); margin: 42px 0 16px; font-weight:700; }
+h3{ color: var(--accent); font-size:20px; margin:28px 0 12px; font-weight:600; }
+p{ margin:0 0 14px; }
+
+/* two-up stills */
+.stills{ display:grid; grid-template-columns:1fr; gap:14px; }
+@media (min-width:720px){ .stills{ grid-template-columns: 1fr 1fr; } }
+.still,.photo{ width:100%; height:auto; border-radius:0; border:1px solid var(--line); display:block; }
+
+/* three-up media grid */
+.media3{ display:grid; grid-template-columns:1fr; gap:16px; margin:48px 0; }
+@media (min-width:680px){ .media3{ grid-template-columns: repeat(2, 1fr); } }
+@media (min-width:980px){ .media3{ grid-template-columns: repeat(3, 1fr); } }
+.media3 figure{ margin:0; }
+.media3 img{ width:100%; height:auto; border:1px solid var(--line); display:block; }
+
+/* two-column text */
+.cols{ column-count:1; column-gap:36px; }
+@media (min-width:980px){ .cols{ column-count:2; } }
+.cols2{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+@media (max-width:980px){ .cols2{ grid-template-columns:1fr; } }
+
+/* video frame (stop-motion) */
+.video-frame{ position:relative; width:100%; max-width:860px; aspect-ratio:16/9; border:1px solid var(--line); overflow:hidden; margin:48px auto 8px; }
+.video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+/* ---------- Moroccan Lamp ---------- */
+.grid{
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:1rem; width: min(92vw, var(--maxw)); margin:0 auto;
+}
+figure{ margin:0; background:transparent; }
+figure img{ width:100%; height:auto; display:block; object-fit:cover; }
+figcaption{ font-family:"Playfair Display", Georgia, serif; font-size:.98rem; color:#333; padding:.5rem .25rem .8rem; }
+
+/* 16:9 video container (lamp) */
+.video-container{
+  position: relative; width:min(92vw, var(--maxw)); max-width:100%;
+  margin:24px auto 0; border-radius:0px; overflow:hidden; background:#000;
+}
+.video-container::before{ content:""; display:block; padding-top:56.25%; }
+.video-container iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+/* Lightbox (lamp) */
+.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.86); display:none; align-items:center; justify-content:center; z-index:9999; padding:4vmin; }
+.lightbox.open{ display:flex; }
+.lightbox img{ max-width:96vw; max-height:92vh; width:auto; height:auto; box-shadow:0 10px 30px rgba(0,0,0,.5); background:#fff; }
+.lightbox .lb-caption{
+  position:fixed; left:50%; transform:translateX(-50%); bottom:2vmin;
+  color:#eee; font-family:"Playfair Display", Georgia, serif; font-size:1rem; text-align:center;
+  padding:.4rem .8rem; background:rgba(0,0,0,.45)
+}
+.lb-close{ position:fixed; top:14px; right:18px; color:#fff; background:rgba(0,0,0,.55); border:1px solid #fff; padding:.2rem .55rem; cursor:pointer; font-size:18px; }
+.thumb{ cursor:zoom-in; }
+
+/* ---------- MSI (locked images) ---------- */
+.locked-img{ position:relative; display:inline-block; }
+.locked-img img{ opacity:.8; filter: blur(4px); pointer-events:none; }
+.locked-img::after{
+  content:"locked until public announcement";
+  position:absolute; top:45%; left:0; width:100%; transform:translateY(-50%);
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Playfair Display", Georgia, serif;
+  font-size: clamp(11px, 1vw, 15px); font-weight:500; letter-spacing:.05em;
+  color:#000; text-transform:lowercase; text-align:center; pointer-events:none;
+  backdrop-filter: blur(1px); padding:.3rem 0; border-radius:4px; background:none;
+}
+
+/* ---------- About ---------- */
+section.about{
+  width:min(92vw,var(--maxw)); margin-inline:auto; padding:0 0 8vh;
+  display:grid; grid-template-columns: 420px 1fr; gap: clamp(1.5rem, 3vw, 2.5rem); align-items:start;
+}
+.portrait{ background:#fff; border-radius:0; overflow:hidden; box-shadow:0 10px 26px rgba(0,0,0,.05); }
+.portrait img{ display:block; width:100%; height:auto; }
+.bio h2{ font-family:"Playfair Display", Georgia, serif; font-weight:700; margin:0 0 .25rem; font-size: clamp(22px, 2.6vw, 30px); }
+.bio .role{ font-family:"Playfair Display", Georgia, serif; font-style:italic; color: rgba(0,0,0,.55); margin-bottom:1.25rem; }
+.links{ margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:.9rem 1.5rem; font-size:.98rem; }
+@media (max-width:860px){
+  section.about{ grid-template-columns:1fr; }
+  .portrait{ max-width:420px; }
+  .portrait, .bio{ margin-inline:auto; }
+}
+
+/* ---------- Reveal micro-animation (safe) ---------- */
+.reveal{ transform: translateY(8px); transition: transform 1.30s ease; will-change: transform; }
+.reveal.in{ transform: none; }
+.art-media.reveal, .art-media.reveal.in{ transform: none !important; }
+@media (prefers-reduced-motion: reduce){ .reveal{ transform:none !important; transition:none !important; } }
+
+/* ---------- Footer ---------- */
+footer{
+  padding: 12vh 0 10vh;
+  color: #8a8a8a;
+  text-align: center;
+  font-size: .9rem;
+  font-family: "Georgia", serif;
+}
+/* STOP-MOTION: About (left) + Poster (right) */
+#about.intro{
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: start;
+  width: min(92vw, var(--maxw));
+  margin-inline: auto;
+}
+
+/* Poster image styling */
+.poster{
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 900px){
+  #about.intro{
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-items: center;
+    text-align: left;
+  }
+  /* put the poster above on small screens (optional) */
+  #about.intro > div:last-child{ order: -1; max-width: 420px; }
+}
+#about.intro p,
+.intro-text p,
+.section p,
+.cols p,
+.cols2 p,
+.wrap p,
+.media3 p,
+.stills + figcaption,
+.media3 figcaption {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  letter-spacing: 0;
+  color: var(--fg);
+}
+a {
+  color: var(--accent);                   /* same pink shade */
+  text-decoration: none;                  /* remove underline */
+  font-weight: 500;                       /* stable weight, no jump */
+  transition: color 0.25s ease, font-weight 0.25s ease;
+}
+
+a:hover {
+  color: #000;                            /* turns black on hover */
+  font-weight: 600;                       /* slightly bolder but smoother */
+}
+
+/* Keep special button links consistent but without underlines */
+.btn, .links a, .footer-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color 0.25s ease;
+}
+
+.btn:hover, .links a:hover, .footer-link:hover {
+  color: #000;
+}
+.bio p a,
+.bio p a:visited {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;                /* consistent with link row */
+  transition: color 0.25s ease, text-decoration-color 0.25s ease;
+}
+
+.bio p a:hover {
+  color: #000;                     /* turns black on hover */
+  text-decoration: underline;      /* underline appears */
+  text-decoration-color: #000;     /* black underline */
+  text-underline-offset: 2px;      /* neat spacing under text */
+}
+.page-home{
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr); /* sidebar + content */
+  min-height: 100vh;
+}
+
+/* Put each piece in its column */
+.page-home .sidebar{ grid-column: 1; }
+.page-home .stage  { grid-column: 2; }
+
+/* Safety: if you ever added margin-left for .stage before, remove it */
+.stage{ margin-left: 0 !important; }
+
+/* Make sure the hero actually shows */
+.home-hero img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+  opacity: 1 !important;   /* in case a reveal animation set it to 0 */
+  visibility: visible !important;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  padding: 32px 24px 24px;
+  background: var(--bg);
+  border-right: 1px solid rgba(0,0,0,.06);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+}
+
+.brand {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: none;
+}
+
+.side-nav .nav-root { list-style: none; padding: 0; margin: 8px 0 0; }
+.side-nav a {
+  display: block;
+  padding: 6px 0;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color .25s ease;
+}
+.side-nav a:hover {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Subtabs */
+.has-children > a { margin-bottom: 2px; }
+.subnav { list-style: none; padding: 0 0 6px 0; margin: 0 0 8px 0; }
+.subnav li a {
+  font-weight: 500;
+  color: var(--accent);
+  opacity: .9;
+  padding: 4px 0 4px 12px;
+}
+.subnav li a:hover { color: #000; }
+
+/* Sidebar footer info */
+.side-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.meta-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.meta-link:hover {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Stage */
+.stage { background: var(--bg); padding: 40px 4vw 56px; }
+.home-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border: 1px solid rgba(0,0,0,.06);
+}
+.home-intro h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(28px, 4vw, 48px);
+  margin: 6px 0 8px;
+}
+.home-intro .intro-copy {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+.home-intro .btn {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color .25s ease;
+}
+.home-intro .btn:hover {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+sidebar{
+  font-family: "Inter", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Root list hygiene */
+.side-nav .nav-root{ list-style: none; padding: 0; margin: 8px 0 0; }
+.has-children{ margin-bottom: 4px; }
+
+/* Section heads ("Art", "Engineering", "About") */
+.nav-head{
+  all: unset;
+  display: block;
+  width: 100%;
+  padding: 6px 0;
+  cursor: pointer;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color .25s ease;
+}
+
+/* hover: turns black, no underline */
+.nav-head:hover{
+  color: #000;
+  text-decoration: none; /* no underline */
+}
+
+/* when open: stays black, no underline */
+.has-children.open > .nav-head{
+  color:#000;
+  text-decoration: none; /* no underline */
+}
+
+/* "About" behaves the same */
+a.nav-head.single:hover{
+  color:#000;
+  text-decoration: none; /* no underline */
+}
+
+/* Submenus (the items under Art/Engineering) */
+.subnav{
+  list-style: none;
+  padding: 0 0 6px 0;
+  margin: 0 0 10px 0;
+  display: none;                   /* collapsed by default */
+}
+.subnav li a{
+  display: block;
+  padding: 4px 0 4px 12px;         /* indent */
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color .25s ease;
+}
+.subnav li a:hover{
+  color:#000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* When a group is opened (JS adds .open), reveal submenu */
+.has-children.open .subnav{ display: block; }
+.subnav li a{
+  font-family: "Playfair Display", Georgia, serif;  /* was Inter */
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 4px 0 4px 12px;
+  transition: color .25s ease;
+}
+.subnav li a:hover{
+  color:#000;
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+.has-children.open > .nav-head{
+  color:#000;
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+/* === Subnav: slower OPEN, faster CLOSE === */
+
+/* base (used for closing) — fast */
+.subnav{
+  display: block !important;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  will-change: max-height, opacity;
+  transition: max-height .22s ease, opacity .14s ease; /* fast close */
+}
+
+/* open state target values */
+.has-children.open .subnav{
+  max-height: 240px;  /* adjust if you add more items */
+  opacity: 1;
+}
+
+/* when OPENING, use longer durations */
+.has-children.opening .subnav{
+  transition: max-height .65s ease, opacity .45s ease; /* slow open */
+}
+
+/* when CLOSING, ensure the fast timing is used (base applies) */
+.has-children.closing .subnav{
+  transition: max-height .22s ease, opacity .14s ease; /* fast close */
+}
+
+/* subtle item fade (keeps it gentle) */
+.subnav li{
+  opacity: 0;
+  transform: translateY(1px);
+  transition: opacity .28s ease, transform .28s ease;
+}
+.has-children.open .subnav li{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* tiny stagger */
+.has-children.open .subnav li:nth-child(1){ transition-delay: 25ms; }
+.has-children.open .subnav li:nth-child(2){ transition-delay: 50ms; }
+.has-children.open .subnav li:nth-child(3){ transition-delay: 75ms; }
+.has-children.open .subnav li:nth-child(4){ transition-delay: 100ms; }
+.has-children.open .subnav li:nth-child(5){ transition-delay: 125ms; }
+
+@media (prefers-reduced-motion: reduce){
+  .subnav, .subnav li{
+    transition: none !important;
+    transform: none !important;
+    max-height: none !important;
+    opacity: 1 !important;
+  }
+}
+.social-icons {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  gap: 12px;                /* space between icons */
+  margin-top: 32px;
+}
+
+.social-icons a {
+  color: var(--accent);
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #000;
+}
+.with-sidebar {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+/* Make the whole <main class="stage"> a centered, fixed-width column */
+.with-sidebar .stage{
+  width: min(92vw, 1100px);   /* your readable width */
+  margin-inline: auto;        /* centers it inside the right column */
+  padding: 40px 4vw 56px;     /* keep your nice padding */
+}
+
+/* Ensure inner blocks just fill that centered column (undo earlier per-child centering) */
+.with-sidebar .stage > header,
+.with-sidebar .stage > section,
+.with-sidebar .stage > article,
+.with-sidebar .stage > div,
+.with-sidebar .stage > footer,
+.with-sidebar .stage > figure{
+  width: 100%;
+  margin-inline: 0;
+}
+body.with-sidebar{
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* hard-center the whole right column content */
+body.with-sidebar > .stage{
+  width: min(92vw, 1100px) !important;   /* readable width */
+  margin: 40px auto 56px !important;     /* center it */
+  padding: 0 4vw;                         /* side padding like other pages */
+}
+
+/* make sure cards/images don't overflow that width */
+body.with-sidebar .gallery,
+body.with-sidebar .art-card,
+body.with-sidebar .art-media{
+  width: 100%;
+  margin-inline: 0;
+}
+body.with-sidebar img.art-img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+root{
+  --content-max: 1100px;   /* your main content max-width */
+  --page-pad: 32px;        /* the side padding/gutter inside the content */
+}
+
+
+/* when the screen is narrower than the content width, tuck it to the edge */
+@media (max-width: 700px){
+  .site-logo{ left: 16px; top: 16px; }
+}
+html, body { margin: 0; }
+
+/* fixed logo — same spot as home brand */
+.site-logo{
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 2000;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #000;
+  transition: color .2s ease;
+}
+.site-logo:hover{ color:#ff69b4; font-weight: inherit;  }
+
+/* home page: place the logo relative to the sidebar so it aligns with nav text */
+.page-home .sidebar{ position: fixed; } /* if not already */
+.page-home .sidebar .site-logo{
+  position: absolute;
+  top: 24px;     /* nudge to taste */
+  left: 24px;    /* matches the sidebar’s inner padding */
+}
+
+/* push the nav down so 'Art' doesn't overlap the logo */
+.page-home .side-nav{ margin-top: 56px; }
+.hero,
+.section,
+.statement,
+.gallery,
+.art-card,
+.wrap,
+.stage {
+  width: min(92vw, 1100px);
+  margin-inline: auto;
+}
+
+/* unified top spacing for every page header */
+header.hero{ padding: 8vh 0 6vh; }
+.media2{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+/* SAFE page fade-in: visible by default */
+body { opacity: 1; }
+
+/* JS will momentarily add this on load */
+body.fade-enter { opacity: 0; }
+
+/* transition from 0 → 1 only when JS runs */
+body.fade-enter-active { 
+  opacity: 1; 
+  transition: opacity .35s ease;
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  body.fade-enter-active { transition: none; }
+}
