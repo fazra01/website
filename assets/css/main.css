@@ -588,10 +588,11 @@ a.nav-head.single:hover{
 .social-icons a:hover {
   color: #000;
 }
-.with-sidebar {
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  min-height: 100dvh;
+.with-sidebar .stage{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
 }
 
 /* Make the whole <main class="stage"> a centered, fixed-width column */
@@ -602,15 +603,6 @@ a.nav-head.single:hover{
 }
 
 /* Ensure inner blocks just fill that centered column (undo earlier per-child centering) */
-.with-sidebar .stage > header,
-.with-sidebar .stage > section,
-.with-sidebar .stage > article,
-.with-sidebar .stage > div,
-.with-sidebar .stage > footer,
-.with-sidebar .stage > figure{
-  width: 100%;
-  margin-inline: 0;
-}
 body.with-sidebar{
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
@@ -619,17 +611,17 @@ body.with-sidebar{
 
 /* hard-center the whole right column content */
 body.with-sidebar > .stage{
-  width: min(92vw, 1100px) !important;   /* readable width */
-  margin: 40px auto 56px !important;     /* center it */
-  padding: 0 4vw;                         /* side padding like other pages */
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* make sure cards/images don't overflow that width */
 body.with-sidebar .gallery,
 body.with-sidebar .art-card,
 body.with-sidebar .art-media{
-  width: 100%;
-  margin-inline: 0;
+  width: min(92vw, var(--maxw));
+  margin-inline: auto;
 }
 body.with-sidebar img.art-img{
   display: block;
@@ -669,6 +661,9 @@ html, body { margin: 0; }
   top: 24px;     /* nudge to taste */
   left: 24px;    /* matches the sidebar’s inner padding */
 }
+/* all other pages that use the sidebar */
+.with-sidebar .sidebar .site-logo{ position: absolute; top: 24px; left: 24px; }
+.with-sidebar .side-nav{ margin-top: 56px; }
 
 /* push the nav down so 'Art' doesn't overlap the logo */
 .page-home .side-nav{ margin-top: 56px; }
@@ -691,19 +686,92 @@ header.hero{ padding: 8vh 0 6vh; }
   gap: 24px;
   align-items: start;
 }
-/* SAFE page fade-in: visible by default */
-body { opacity: 1; }
-
-/* JS will momentarily add this on load */
-body.fade-enter { opacity: 0; }
-
-/* transition from 0 → 1 only when JS runs */
-body.fade-enter-active { 
-  opacity: 1; 
-  transition: opacity .35s ease;
-}
 
 /* accessibility */
 @media (prefers-reduced-motion: reduce) {
   body.fade-enter-active { transition: none; }
+}
+/* ===== HOMEPAGE ONLY: fully static (no scroll) ===== */
+html, body {
+  overflow: auto; /* default for all pages */
+}
+
+/* Apply scroll lock ONLY to home */
+body.page-home {
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;           /* locks it completely */
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* Stage area */
+.page-home .stage {
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Center hero image with space above and below */
+.page-home .home-hero {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 0;            /* top/bottom breathing room */
+  box-sizing: border-box;
+}
+
+/* Hero image */
+.page-home .home-hero img {
+  height: 90vh;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  border: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    /* 'both' = starts from 0 opacity (backwards) and ends at 1 (forwards) */
+    animation: siteFadeIn 0.3s ease-out both;
+  }
+}
+
+@keyframes siteFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.subnav li a.active,
+.subnav li a.active:hover {
+  color: #000 !important;
+  font-weight: 500 !important; /* normal weight */
+  text-decoration: none !important;
+}
+
+/* Top-level single link (About) when active */
+a.nav-head.single.active,
+a.nav-head.single.active:hover {
+  color: #000 !important;
+  font-weight: 700 !important; /* keep section titles consistent */
+  text-decoration: none !important;
+}
+
+/* Keep the parent section (Art/Engineering) black when it contains the active page */
+.has-children:has(.subnav a.active) > .nav-head {
+  color: #000 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+.has-children:has(.subnav a.active) > .nav-head{
+  color: var(--accent) !important;     /* pink again */
+  font-weight: 700 !important;         /* keep your section header weight */
+  text-decoration: none !important;
+}
+/* Current page link in the sidebar */
+.side-nav a.active{
+  color: #000;              /* black */
+  text-decoration: none;    /* no underline */
+  font-weight: 500;         /* not bold */
 }

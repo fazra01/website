@@ -8,161 +8,201 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script defer src="../assets/js/main.js"></script>
 </head>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-  // Auto-tag the usual suspects
-  const selectors = [
-    'header.hero','section','.art-title','.statement .copy',
-    '.art-card','.art-media','.art-info','.art-grid img','hr.divider','footer'
-  ];
-  const targets = document.querySelectorAll(selectors.join(', '));
-  targets.forEach(el => el.classList.add('reveal'));
 
-  // Stagger grid images a bit
-  document.querySelectorAll('.art-grid').forEach(grid => {
-    grid.querySelectorAll('img').forEach((el,i)=>{ el.style.transitionDelay = (i*60)+'ms'; });
-  });
+<body class="with-sidebar page-project">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="site-logo" href="../index.html">FADI AZRA</a>
 
-  // Respect reduced motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    targets.forEach(el => el.classList.add('in'));
-    return;
-  }
+    <nav class="side-nav">
+      <ul class="nav-root">
+        <!-- ART -->
+        <li class="has-children">
+          <button class="nav-head" type="button" data-target="#art-sub">Art</button>
+          <ul id="art-sub" class="subnav">
+            <li><a href="../painting-series/painting-series.html">Painting Series</a></li>
+            <li><a href="../stop-motion/stop-motion.html">Stop-Motion</a></li>
+            <li><a href="../artist-statement/artist_statement.html">Artist Statement</a></li>
+          </ul>
+        </li>
 
-  // Only control the tiny rise. No opacity changes.
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(e => {
-      const r = e.intersectionRatio; // 0..1
-      if (r > 0.12) {
-        e.target.classList.add('in');
-        // Once in, stop observing to prevent any flicker
-        obs.unobserve(e.target);
+        <!-- ENGINEERING -->
+        <li class="has-children">
+          <button class="nav-head" type="button" data-target="#eng-sub">Engineering</button>
+          <ul id="eng-sub" class="subnav">
+            <li><a href="../moroccan-lamp/moroccan-lamp.html">Moroccan Lamp</a></li>
+            <li><a href="../griffin-msi-internship/griffin-msi-internship.html">Griffin MSI Internship</a></li>
+            <li><a href="../corpse-bride/corpse-bride.html">Corpse Bride</a></li>
+          </ul>
+        </li>
+
+        <!-- ABOUT -->
+        <li><a class="nav-head single" href="../about/about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <!-- Social icons -->
+    <div class="social-icons">
+      <a href="mailto:fadiazra8@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/fadi-azra-b62723335" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/fadi_azra_art?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </aside>
+
+  <!-- Main content (no extra logo here) -->
+  <main class="stage">
+    <header class="hero">
+      <h1>Corpse Bride — Final Scene Study</h1>
+      <div class="subhead">3ds Max Final Project, 2025</div>
+    </header>
+
+    <section class="intro">
+      <div class="intro-grid">
+        <img src="images/rendering1.jpg" alt="Corpse Bride render 1" />
+        <img src="images/rendering2.jpg" alt="Corpse Bride render 2" />
+      </div>
+      <div class="intro-text">
+        For my final project, I attempted to recreate the final scene from the iconic film
+        <em>Corpse Bride</em>, where Emily transforms into butterflies and vanishes into the moonlight.
+        My goal was to capture the mystical and magical atmosphere that Tim Burton crafted so effectively.
+      </div>
+    </section>
+
+    <section class="gallery">
+      <article class="art-card" id="rendering-shot">
+        <h2 class="art-title">Final Rendered Scene</h2>
+        <div class="art-media">
+          <iframe src="https://www.youtube.com/embed/I0s8nPXCK70" title="Rendering shot — Corpse Bride final scene study" allowfullscreen></iframe>
+        </div>
+        <div class="art-info">
+          <div class="art-meta">
+            <div class="art-meta-left">
+              <span><strong>Software:</strong> Autodesk 3ds Max (Arnold)</span>
+              <span><strong>Techniques:</strong> Sky dome, UVW maps, bitmap textures</span>
+            </div>
+            <div class="art-meta-right">
+              <span><strong>Focus:</strong> Atmosphere &amp; lighting</span>
+              <span><strong>Scene:</strong> Moon, stars, subtle emission</span>
+            </div>
+          </div>
+          <div class="art-desc">
+            Building the scene’s geometry was both fun and full of problem-solving. I spent a long time figuring out how to make the sky look believable—eventually using a stretched sphere with carefully chosen moon bitmaps. Getting the skydome to emit light while preserving the starry night feel took a lot of testing, but I finally found a subtle glow that complemented the scene. Lighting was another challenge; experimenting with Arnold lights taught me how soft, ethereal shadows could shape the bride’s silhouette in a way that felt alive.
+          </div>
+        </div>
+      </article>
+
+      <article class="art-card" id="lighting-study">
+        <h2 class="art-title">Animation Study</h2>
+        <div class="art-media">
+          <iframe
+            src="https://www.youtube.com/embed/E8CFESRuXlA?autoplay=1&loop=1&playlist=E8CFESRuXlA&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0"
+            title="Lighting breakdown — Corpse Bride final scene study"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="art-info">
+          <div class="art-meta">
+            <div class="art-meta-left">
+              <span><strong>Lights:</strong> Arnold key</span>
+              <span><strong>Goal:</strong> full presence to disappearing</span>
+            </div>
+            <div class="art-meta-right">
+              <span><strong>Challenge:</strong> Silhouette shaping</span>
+              <span><strong>Outcome:</strong> Elongated moonlit shadows</span>
+            </div>
+          </div>
+          <div class="art-desc">
+            One subtle detail in the final animation is how the moonlight interacts with the bride’s silhouette. It highlights her transition from a tangible presence to an ethereal figure. I took special care in positioning the light to cast soft, elongated shadows that enhance the sense of weightlessness.
+          </div>
+        </div>
+      </article>
+
+      <article class="art-card" id="character-build">
+        <h2 class="art-title">Character Build</h2>
+        <div class="art-grid">
+          <img src="images/face.png" alt="Emily face texture" />
+          <img src="images/character1.png" alt="Emily character model" />
+          <img src="images/dresstop.png" alt="Emily top view" />
+        </div>
+        <div class="art-info">
+          <div class="art-meta">
+            <div class="art-meta-left">
+              <span><strong>Modeling:</strong> Body &amp; head from scratch</span>
+              <span><strong>Textures:</strong> Procreate (dress &amp; face variants)</span>
+            </div>
+            <div class="art-meta-right">
+              <span><strong>Imports:</strong> Pre-modeled hair &amp; hands</span>
+              <span><strong>Note:</strong> Hair &amp; Fur omitted for performance</span>
+            </div>
+          </div>
+          <div class="art-desc">
+            Building Emily was the hardest part. I learned character modeling basics on the fly, paying careful attention to polygon flow to avoid seams. I created multiple dress and face textures in Procreate to align with UVW maps—iterating eight face versions to match socket, nose, mouth, and the cheek opening. I swapped simulated hair for a pre-modeled mesh to keep the scene performant and stable.
+          </div>
+        </div>
+      </article>
+
+      <article class="art-card" id="takeaways">
+        <h2 class="art-title">Takeaways</h2>
+        <div class="art-info">
+          <div class="art-desc">
+            This project reframed how I think about communication in animation. I started by chasing technical precision, but found that stylized choices—like simplified hair geometry—often convey emotion more directly. The aim wasn’t perfect realism; it was to make the scene feel honest to the story and atmosphere.
+          </div>
+        </div>
+      </article>
+
+      <article class="art-card" id="assets">
+        <h2 class="art-title">Assets &amp; References</h2>
+        <div class="art-info">
+          <div class="art-desc">
+            Hands model:
+            <a class="footer-link" href="https://free3d.com/3d-model/hand-7405.html" target="_blank" rel="noopener">Free3D — Hand</a><br/>
+            Hair model:
+            <a class="footer-link" href="https://free3d.com/3d-model/helen-hair-6320.html" target="_blank" rel="noopener">Free3D — Helen Hair</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer>© <span id="year"></span> Fadi Azra — Engineering</footer>
+  </main>
+
+  <!-- Page-specific script moved to the end -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const selectors = [
+        'header.hero','section','.art-title','.statement .copy',
+        '.art-card','.art-media','.art-info','.art-grid img','hr.divider','footer'
+      ];
+      const targets = document.querySelectorAll(selectors.join(', '));
+      targets.forEach(el => el.classList.add('reveal'));
+
+      document.querySelectorAll('.art-grid').forEach(grid => {
+        grid.querySelectorAll('img').forEach((el,i)=>{ el.style.transitionDelay = (i*60)+'ms'; });
+      });
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        targets.forEach(el => el.classList.add('in'));
+        return;
       }
+
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.intersectionRatio > 0.12) {
+            e.target.classList.add('in');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: [0, .12], rootMargin: '0px 0px -8% 0px' });
+
+      targets.forEach(el => io.observe(el));
+
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
     });
-  }, { threshold: [0, .12], rootMargin: '0px 0px -8% 0px' });
-
-  targets.forEach(el => io.observe(el));
-
-  // Year (keep if you had it)
-  const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-});
-</script>
-<body>
-  <a class="site-logo" href="../index.html">FADI AZRA</a>
-  <header class="hero">
-    <h1>Corpse Bride — Final Scene Study</h1>
-    <div class="subhead">3ds Max Final Project, 2025</div>
-  </header>
-<section class="intro">
-<div class="intro-grid">
-    <img src="images/rendering1.jpg" alt="Corpse Bride render 1" />
-    <img src="images/rendering2.jpg" alt="Corpse Bride render 2" />
-  </div>
-  <div class="intro-text">
-    For my final project, I attempted to recreate the final scene from the iconic film 
-    <em>Corpse Bride</em>, where Emily transforms into butterflies and vanishes into the moonlight. 
-    My goal was to capture the mystical and magical atmosphere that Tim Burton crafted so effectively.
-  </div>
-
-  
-</section>
-
-  <section class="gallery">
-    <article class="art-card" id="rendering-shot">
-      <h2 class="art-title">Final Rendered Scene</h2>
-      <div class="art-media">
-        <!-- If you have a still, replace the iframe with an <img class="art-img" src="images/3dsmax-render.jpg" alt="Rendering shot" /> -->
-        <iframe src="https://www.youtube.com/embed/I0s8nPXCK70" title="Rendering shot — Corpse Bride final scene study" allowfullscreen></iframe>
-      </div>
-      <div class="art-info">
-        <div class="art-meta">
-          <div class="art-meta-left">
-            <span><strong>Software:</strong> Autodesk 3ds Max (Arnold)</span>
-            <span><strong>Techniques:</strong> Sky dome, UVW maps, bitmap textures</span>
-          </div>
-          <div class="art-meta-right">
-            <span><strong>Focus:</strong> Atmosphere &amp; lighting</span>
-            <span><strong>Scene:</strong> Moon, stars, subtle emission</span>
-          </div>
-        </div>
-        <div class="art-desc">
-          Building the scene’s geometry was both fun and full of problem-solving. I spent a long time figuring out how to make the sky look believable—eventually using a stretched sphere with carefully chosen moon bitmaps. Getting the skydome to emit light while preserving the starry night feel took a lot of testing, but I finally found a subtle glow that complemented the scene. Lighting was another challenge; experimenting with Arnold lights taught me how soft, ethereal shadows could shape the bride’s silhouette in a way that felt alive.
-        </div>
-      </div>
-    </article>
-
-    <article class="art-card" id="lighting-study">
-      <h2 class="art-title">Animation Study</h2>
-      <div class="art-media">
-        <iframe
-  src="https://www.youtube.com/embed/E8CFESRuXlA?autoplay=1&loop=1&playlist=E8CFESRuXlA&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0"
-  title="Lighting breakdown — Corpse Bride final scene study"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen></iframe>
-      </div>
-      <div class="art-info">
-        <div class="art-meta">
-          <div class="art-meta-left">
-            <span><strong>Lights:</strong> Arnold key</span>
-            <span><strong>Goal:</strong> full presence to disappearing</span>
-          </div>
-          <div class="art-meta-right">
-            <span><strong>Challenge:</strong> Silhouette shaping</span>
-            <span><strong>Outcome:</strong> Elongated moonlit shadows</span>
-          </div>
-        </div>
-        <div class="art-desc">
-          One subtle detail in the final animation is how the moonlight interacts with the bride’s silhouette. It highlights her transition from a tangible presence to an ethereal figure. I took special care in positioning the light to cast soft, elongated shadows that enhance the sense of weightlessness.
-        </div>
-      </div>
-    </article>
-
-    <article class="art-card" id="character-build">
-      <h2 class="art-title">Character Build</h2>
-      <div class="art-grid">
-  <img src="images/face.png" alt="Emily face texture" />
-  <img src="images/character1.png" alt="Emily character model" />
-  <img src="images/dresstop.png" alt="Emily top view" />
-</div>
-      <div class="art-info">
-        <div class="art-meta">
-          <div class="art-meta-left">
-            <span><strong>Modeling:</strong> Body &amp; head from scratch</span>
-            <span><strong>Textures:</strong> Procreate (dress &amp; face variants)</span>
-          </div>
-          <div class="art-meta-right">
-            <span><strong>Imports:</strong> Pre-modeled hair &amp; hands</span>
-            <span><strong>Note:</strong> Hair &amp; Fur omitted for performance</span>
-          </div>
-        </div>
-        <div class="art-desc">
-          Building Emily was the hardest part. I learned character modeling basics on the fly, paying careful attention to polygon flow to avoid seams. I created multiple dress and face textures in Procreate to align with UVW maps—iterating eight face versions to match socket, nose, mouth, and the cheek opening. I swapped simulated hair for a pre-modeled mesh to keep the scene performant and stable.
-        </div>
-      </div>
-    </article>
-
-    <article class="art-card" id="takeaways">
-      <h2 class="art-title">Takeaways</h2>
-      <div class="art-info">
-        <div class="art-desc">
-          This project reframed how I think about communication in animation. I started by chasing technical precision, but found that stylized choices—like simplified hair geometry—often convey emotion more directly. The aim wasn’t perfect realism; it was to make the scene feel honest to the story and atmosphere.
-        </div>
-      </div>
-    </article>
-
-    <article class="art-card" id="assets">
-      <h2 class="art-title">Assets &amp; References</h2>
-      <div class="art-info">
-        <div class="art-desc">
-          Hands model: <a href="https://free3d.com/3d-model/hand-7405.html" target="_blank" rel="noopener">Free3D — Hand</a><br/>
-          Hair model: <a href="https://free3d.com/3d-model/helen-hair-6320.html" target="_blank" rel="noopener">Free3D — Helen Hair</a>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <footer>© <span id="year"></span> Fadi Azra — Engineering</footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+  </script>
 </body>
+
 </html>

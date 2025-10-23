@@ -8,8 +8,52 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script defer src="../assets/js/main.js"></script>
 </head>
-<body>
+<body class="with-sidebar">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="site-logo" href="../index.html">FADI AZRA</a>
+
+    <nav class="side-nav">
+      <ul class="nav-root">
+        <!-- ART -->
+        <li class="has-children">
+          <button class="nav-head" type="button" data-target="#art-sub">Art</button>
+          <ul id="art-sub" class="subnav">
+            <li><a href="../painting-series/painting-series.html">Painting Series</a></li>
+            <li><a href="../stop-motion/stop-motion.html">Stop-Motion</a></li>
+            <li><a href="../artist-statement/artist_statement.html">Artist Statement</a></li>
+          </ul>
+        </li>
+
+        <!-- ENGINEERING -->
+        <li class="has-children">
+          <button class="nav-head" type="button" data-target="#eng-sub">Engineering</button>
+          <ul id="eng-sub" class="subnav">
+            <li><a href="../moroccan-lamp/moroccan-lamp.html">Moroccan Lamp</a></li>
+            <li><a href="../griffin-msi-internship/griffin-msi-internship.html">Griffin MSI Internship</a></li>
+            <li><a href="../corpse-bride/corpse-bride.html">Corpse Bride</a></li>
+          </ul>
+        </li>
+
+        <!-- ABOUT -->
+        <li><a class="nav-head single" href="../about/about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <!-- Social icons -->
+    <div class="social-icons">
+      <a href="mailto:fadiazra8@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/fadi-azra-b62723335" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/fadi_azra_art?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </aside>
+
+
+  
+  <main class="stage">
   <a class="site-logo" href="../index.html">FADI AZRA</a>
     <header class="hero">
       <h1>Adam (آدم)</h1>
@@ -143,5 +187,6 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+</main>
 </body>
 </html>

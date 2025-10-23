@@ -1,65 +1,182 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // mobile sidebar toggle
-  const btn = document.querySelector('.side-toggle');
-  const sidebar = document.querySelector('.sidebar');
-  if (btn && sidebar) btn.addEventListener('click', () => sidebar.classList.toggle('open'));
+/* =========================================================
+   FADI AZRA — MAIN.JS
+   - Sidebar open/close with gentle timing
+   - Page fade-in on load (no fade-out)
+   - Remember open groups (localStorage)
+   - Collapse all when clicking the logo
+   - Highlight only the current page link; open just its parent group
+   ========================================================= */
 
-  // active link highlighter
-  const here = location.pathname.replace(/\/index\.html$/, '/');
-  document.querySelectorAll('.side-nav a').forEach(a => {
-    const url = new URL(a.getAttribute('href'), location.origin + location.pathname);
-    const path = url.pathname.replace(/\/index\.html$/, '/');
-    if (path === here) a.classList.add('active');
-  });
-});
-document.addEventListener('DOMContentLoaded', () => {
-  // Collapsible side nav with different timings for open/close
-  document.querySelectorAll('.nav-head[type="button"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const li = btn.closest('.has-children');
-      const sub = li.querySelector('.subnav');
+(function () {
+  // ---------- Utilities ----------
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // OPEN
-      if (!li.classList.contains('open')) {
-        li.classList.remove('closing');
-        li.classList.add('opening');
-        // ensure CSS picks up the new transition before changing state
-        void sub.offsetHeight;
-        li.classList.add('open');
+  // Persist which groups are open (by their data-target)
+  const STORAGE_KEY = 'sidebarOpenGroups_v1';
+  const getSaved = () => {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+  };
+  const saveOpenTargets = () => {
+    const openTargets = [...document.querySelectorAll('.has-children.open > .nav-head[data-target]')]
+      .map(h => h.getAttribute('data-target'));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(openTargets));
+  };
 
-        const onEndOpen = (e) => {
-          if (e.propertyName === 'max-height') {
-            li.classList.remove('opening');
-            sub.removeEventListener('transitionend', onEndOpen);
-          }
-        };
-        sub.addEventListener('transitionend', onEndOpen);
+  // ---------- Sidebar: collapsible groups ----------
+  function setupSidebarToggles() {
+    const heads = document.querySelectorAll('.nav-head[data-target]');
+    const saved = new Set(getSaved());
+
+    heads.forEach((btn) => {
+      const targetSel = btn.getAttribute('data-target');
+      const item = btn.closest('.has-children');
+      if (!item || !targetSel) return;
+
+      // Restore previously open groups WITHOUT animation
+      if (saved.has(targetSel)) {
+        item.classList.add('open');
+        item.classList.remove('opening', 'closing');
       }
-      // CLOSE
-      else {
-        li.classList.remove('opening');
-        li.classList.add('closing');
-        // ensure CSS picks up the fast close timings
-        void sub.offsetHeight;
-        li.classList.remove('open');
 
-        const onEndClose = (e) => {
-          if (e.propertyName === 'max-height') {
-            li.classList.remove('closing');
-            sub.removeEventListener('transitionend', onEndClose);
-          }
-        };
-        sub.addEventListener('transitionend', onEndClose);
-      }
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        if (isOpen) {
+          closeGroup(item);
+        } else {
+          openGroup(item);
+        }
+        saveOpenTargets(); // persist after each toggle
+      });
     });
+  }
+
+  // Open with slower animation (matches CSS .opening timing)
+  function openGroup(el) {
+    el.classList.remove('closing');
+    el.classList.add('opening', 'open');
+    if (prefersReduced) {
+      el.classList.remove('opening');
+      saveOpenTargets();
+      return;
+    }
+    window.setTimeout(() => {
+      el.classList.remove('opening');
+      saveOpenTargets();
+    }, 650); // keep in sync with CSS
+  }
+
+  // Close with faster animation (matches CSS base/closing timing)
+  function closeGroup(el) {
+    el.classList.remove('opening');
+    el.classList.add('closing');
+    if (prefersReduced) {
+      el.classList.remove('closing', 'open');
+      saveOpenTargets();
+      return;
+    }
+    window.setTimeout(() => {
+      el.classList.remove('closing', 'open');
+      saveOpenTargets();
+    }, 220); // keep in sync with CSS
+  }
+
+  // Close ALL groups
+  function collapseAll() {
+    document.querySelectorAll('.has-children')
+      .forEach(g => g.classList.remove('open','opening','closing'));
+    saveOpenTargets();
+  }
+
+  // ---------- Current page highlighting ----------
+  // Mark the current link and open JUST its parent group (if any).
+  function markActiveAndOpen() {
+  // filename like 'about.html' or 'moroccan-lamp.html'
+  const here = location.pathname.split('/').pop();
+
+  // clear any previous “active”
+  document.querySelectorAll('.side-nav a.active').forEach(a => a.classList.remove('active'));
+
+  let matched = null;
+  document.querySelectorAll('.side-nav a').forEach(link => {
+    const href = link.getAttribute('href') || '';
+    if (href.endsWith(here)) {
+      link.classList.add('active');
+      matched = link;
+    }
   });
-});
-document.addEventListener('DOMContentLoaded', () => {
-  // start hidden only if JS is working
-  document.body.classList.add('fade-enter');
-  // let the browser paint once, then trigger transition
-  requestAnimationFrame(() => {
-    document.body.classList.add('fade-enter-active');
-    document.body.classList.remove('fade-enter');
-  });
-});
+
+  // If the current page is a sub-item, just open ITS group; leave others alone.
+  if (matched) {
+    const group = matched.closest('.has-children');
+    if (group) {
+      group.classList.add('open');
+      group.classList.remove('opening','closing');
+      saveOpenTargets();
+    }
+  }
+}
+
+  // ---------- Micro "reveal" on scroll (safe) ----------
+  function setupRevealOnScroll() {
+    const els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+      els.forEach((el) => io.observe(el));
+    } else {
+      els.forEach((el) => el.classList.add('in'));
+    }
+  }
+
+  // ---------- Page fade-in on load (no fade-out) ----------
+  function fadeInOnLoad() {
+    const b = document.body;
+    b.style.removeProperty('opacity');
+    b.style.removeProperty('transition');
+    if (prefersReduced) return;
+    b.style.opacity = '0';
+    b.style.transition = 'opacity 0.45s ease';
+    requestAnimationFrame(() => { b.style.opacity = '1'; });
+  }
+
+  // ---------- Init ----------
+  function init() {
+    setupSidebarToggles();
+    setupRevealOnScroll();
+    fadeInOnLoad();
+
+    // If we arrived here after clicking the logo, force-collapse once
+    if (sessionStorage.getItem('collapseSidebar') === '1') {
+      collapseAll();
+      sessionStorage.removeItem('collapseSidebar');
+    }
+
+    // Highlight the current link and open only its parent group (if any)
+    markActiveAndOpen();
+
+    // Clicking the logo: collapse now and also collapse on the next page load
+    const logo = document.querySelector('.site-logo');
+    if (logo) {
+      logo.addEventListener('click', () => {
+        collapseAll();
+        sessionStorage.setItem('collapseSidebar', '1');
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();

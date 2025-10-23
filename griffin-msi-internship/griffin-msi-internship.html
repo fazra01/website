@@ -8,112 +8,156 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script defer src="../assets/js/main.js"></script>
 </head>
-<body>
-  <a class="site-logo" href="../index.html">FADI AZRA</a>
-  <header class="hero">
-    <h1>Confidential Exhibit — Design Rendering Intern, MSI Chicago (Summer 2025)</h1>
-    <div class="subhead">Pre-announcement project — exhibit name to be added after public release</div>
-  </header>
+<body class="with-sidebar">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="site-logo" href="../index.html">FADI AZRA</a>
 
-  <section class="intro">
-    <div class="intro-grid">
-<figure class="locked-img">
-      <img src="images/hero_safe.jpg" alt="Abstract crop of safe exhibit rendering" />
-</figure>
-    </div>
-    <div class="intro-text">
-      During Summer 2025, I worked at the Kenneth C. Griffin Museum of Science and Industry in Chicago as a Design Intern. I built 3D environment models and produced weekly renderings for a confidential exhibit. These renders guided spatial layout, lighting, and artifact protection discussions for leadership reviews. Details and cleared images will be added after the museum’s official announcement.
-    </div>
-  </section>
+    <nav class="side-nav">
+      <ul class="nav-root">
+        <!-- ART -->
+        <li class="has-children">
+          <button class="nav-head" type="button" data-target="#art-sub">Art</button>
+          <ul id="art-sub" class="subnav">
+            <li><a href="../painting-series/painting-series.html">Painting Series</a></li>
+            <li><a href="../stop-motion/stop-motion.html">Stop-Motion</a></li>
+            <li><a href="../artist-statement/artist_statement.html">Artist Statement</a></li>
+          </ul>
+        </li>
 
-  <section class="gallery">
-    <article class="art-card" id="process">
-      
-  <h2 class="art-title">Design Process</h2>
-  <div class="art-info">
-    <div class="art-desc">
-      I joined the design team midway through the exhibit’s conceptual development phase. 
-      My responsibilities centered on translating physical measurements into digital models, 
-      generating iterative renders, and refining lighting schemes that aligned with the curatorial narrative. 
-      I participated in cross-department meetings where creative direction, accessibility, and 
-      artifact presentation strategies were discussed. 
-      Weekly feedback sessions shaped how I approached realism, scale, and the emotional tone of light.
-    </div>
-  </div>
-</article>
+        <!-- ENGINEERING -->
+        <li class="has-children">
+          <button class="nav-head" type="button" data-target="#eng-sub">Engineering</button>
+          <ul id="eng-sub" class="subnav">
+            <li><a href="../moroccan-lamp/moroccan-lamp.html">Moroccan Lamp</a></li>
+            <li><a href="../griffin-msi-internship/griffin-msi-internship.html">Griffin MSI Internship</a></li>
+            <li><a href="../corpse-bride/corpse-bride.html">Corpse Bride</a></li>
+          </ul>
+        </li>
 
-    <article class="art-card" id="renders">
-      <h2 class="art-title">Render Studies</h2>
-      <div class="art-grid">
+        <!-- ABOUT -->
+        <li><a class="nav-head single" href="../about/about.html">About</a></li>
+      </ul>
+    </nav>
+
+    <!-- Social icons -->
+    <div class="social-icons">
+      <a href="mailto:fadiazra8@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/fadi-azra-b62723335" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/fadi_azra_art?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="stage">
+    <header class="hero">
+      <h1>Confidential Exhibit — Design Rendering Intern, MSI Chicago (Summer 2025)</h1>
+      <div class="subhead">Pre-announcement project — exhibit name to be added after public release</div>
+    </header>
+
+    <section class="intro">
+      <div class="intro-grid">
         <figure class="locked-img">
-          <img src="images/Room 3 Render Test Elevation.jpg" alt="Room 3 — elevation lighting test render" />
-          <figcaption>Room 3 — final elevation lighting test</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Room 3 Isometric view.jpg" alt="Room 3 — isometric view render" />
-          <figcaption>Isometric overview for spatial alignment</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Room 4 Render Test Elevation.jpg" alt="Room 4 — elevation lighting test render" />
-          <figcaption>Room 4 — initial elevation render</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Room 4 Render 2 Test Elevation.jpg" alt="Room 4 — alternate elevation lighting test render" />
-          <figcaption>Room 4 — refined lighting iteration</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Room 5 Render Test Elevation.jpg" alt="Room 5 — elevation lighting test render" />
-          <figcaption>Room 5 — early concept render</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Room 5 Render 2 Test Elevation.jpg" alt="Room 5 — alternate elevation lighting test render" />
-          <figcaption>Room 5 — updated color temperature</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Room 5 Render 3 Test Elevation.jpg" alt="Room 5 — additional elevation lighting test render" />
-          <figcaption>Room 5 — final color balance test</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Early Render Test.jpg" alt="Early gallery render test" />
-          <figcaption>Early gallery overview render</figcaption>
-        </figure>
-        <figure class="locked-img">
-          <img src="images/Very Early Render Test.png" alt="Very early gallery render test" />
-          <figcaption>Very early material and lighting exploration</figcaption>
+          <img src="images/hero_safe.jpg" alt="Abstract crop of safe exhibit rendering" />
         </figure>
       </div>
-      <div class="art-info">
-        <div class="art-desc">A selection of elevation and overview renders used during weekly internal design reviews to compare layout, lighting, and spatial rhythm across rooms.</div>
+      <div class="intro-text">
+        During Summer 2025, I worked at the Kenneth C. Griffin Museum of Science and Industry in Chicago as a Design Intern. I built 3D environment models and produced weekly renderings for a confidential exhibit. These renders guided spatial layout, lighting, and artifact protection discussions for leadership reviews. Details and cleared images will be added after the museum’s official announcement.
       </div>
-    </article>
+    </section>
 
-    <article class="art-card" id="outcomes">
-      <h2 class="art-title">Outcomes & Reflection</h2>
-      <div class="art-info">
-<div class="art-media" style="margin-top: 2rem;">
-<figure class="locked-img">
-  <img src="images/outcome.png" alt="Printed exhibit rendering mounted on foam core board for internal design meeting" />
-</figure>
-</div>
-        <div class="art-meta">
-          <div class="art-meta-left">
-            <span>Outcome: Renderings used in design reviews</span>
-            <span>Feedback: Invitation to return next summer</span>
-          </div>
-          <div class="art-meta-right">
-            <span>Impact: Faster iteration cycles</span>
-            <span>Focus: Human-factors integration</span>
+    <section class="gallery">
+      <article class="art-card" id="process">
+        <h2 class="art-title">Design Process</h2>
+        <div class="art-info">
+          <div class="art-desc">
+            I joined the design team midway through the exhibit’s conceptual development phase. 
+            My responsibilities centered on translating physical measurements into digital models, 
+            generating iterative renders, and refining lighting schemes that aligned with the curatorial narrative. 
+            I participated in cross-department meetings where creative direction, accessibility, and 
+            artifact presentation strategies were discussed. 
+            Weekly feedback sessions shaped how I approached realism, scale, and the emotional tone of light.
           </div>
         </div>
-        <div class="art-desc">
-          Precision is storytelling. Watching panels go up and wayfinding tuned taught me how much visitor experience lives in small details. In 3D, I treated every render as a question rather than an answer. Weekly passes let us test layouts and lighting before any physical build—balancing playfulness with rigor.
-        </div>
-      </div>
-    </article>
-  </section>
+      </article>
 
-  <footer>© <span id="year"></span> Fadi Azra — Engineering</footer>
+      <article class="art-card" id="renders">
+        <h2 class="art-title">Render Studies</h2>
+        <div class="art-grid">
+          <figure class="locked-img">
+            <img src="images/Room 3 Render Test Elevation.jpg" alt="Room 3 — elevation lighting test render" />
+            <figcaption>Room 3 — final elevation lighting test</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Room 3 Isometric view.jpg" alt="Room 3 — isometric view render" />
+            <figcaption>Isometric overview for spatial alignment</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Room 4 Render Test Elevation.jpg" alt="Room 4 — elevation lighting test render" />
+            <figcaption>Room 4 — initial elevation render</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Room 4 Render 2 Test Elevation.jpg" alt="Room 4 — alternate elevation lighting test render" />
+            <figcaption>Room 4 — refined lighting iteration</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Room 5 Render Test Elevation.jpg" alt="Room 5 — elevation lighting test render" />
+            <figcaption>Room 5 — early concept render</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Room 5 Render 2 Test Elevation.jpg" alt="Room 5 — alternate elevation lighting test render" />
+            <figcaption>Room 5 — updated color temperature</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Room 5 Render 3 Test Elevation.jpg" alt="Room 5 — additional elevation lighting test render" />
+            <figcaption>Room 5 — final color balance test</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Early Render Test.jpg" alt="Early gallery render test" />
+            <figcaption>Early gallery overview render</figcaption>
+          </figure>
+          <figure class="locked-img">
+            <img src="images/Very Early Render Test.png" alt="Very early gallery render test" />
+            <figcaption>Very early material and lighting exploration</figcaption>
+          </figure>
+        </div>
+        <div class="art-info">
+          <div class="art-desc">A selection of elevation and overview renders used during weekly internal design reviews to compare layout, lighting, and spatial rhythm across rooms.</div>
+        </div>
+      </article>
+
+      <article class="art-card" id="outcomes">
+        <h2 class="art-title">Outcomes & Reflection</h2>
+        <div class="art-info">
+          <div class="art-media" style="margin-top: 2rem;">
+            <figure class="locked-img">
+              <img src="images/outcome.png" alt="Printed exhibit rendering mounted on foam core board for internal design meeting" />
+            </figure>
+          </div>
+          <div class="art-meta">
+            <div class="art-meta-left">
+              <span>Outcome: Renderings used in design reviews</span>
+              <span>Feedback: Invitation to return next summer</span>
+            </div>
+            <div class="art-meta-right">
+              <span>Impact: Faster iteration cycles</span>
+              <span>Focus: Human-factors integration</span>
+            </div>
+          </div>
+          <div class="art-desc">
+            Precision is storytelling. Watching panels go up and wayfinding tuned taught me how much visitor experience lives in small details. In 3D, I treated every render as a question rather than an answer. Weekly passes let us test layouts and lighting before any physical build—balancing playfulness with rigor.
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer>© <span id="year"></span> Fadi Azra — Engineering</footer>
+  </main>
+
   <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
 </body>
+
 </html>
