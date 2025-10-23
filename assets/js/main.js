@@ -13,6 +13,9 @@
 
   // Persist which groups are open (by their data-target)
   const STORAGE_KEY = 'sidebarOpenGroups_v1';
+  const VISITED_KEY = 'hasVisited_v1';        // <-- NEW: track first visit
+  const SESSION_COLLAPSE = 'collapseSidebar'; // <-- NEW: session flag
+
   const getSaved = () => {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
     catch { return []; }
@@ -24,7 +27,8 @@
   };
 
   // ---------- Sidebar: collapsible groups ----------
-  function setupSidebarToggles() {
+  // accept a flag to skip restoring saved groups (used on first visit / after logo click)
+  function setupSidebarToggles(skipRestore = false) {
     const heads = document.querySelectorAll('.nav-head[data-target]');
     const saved = new Set(getSaved());
 
@@ -34,7 +38,7 @@
       if (!item || !targetSel) return;
 
       // Restore previously open groups WITHOUT animation
-      if (saved.has(targetSel)) {
+      if (!skipRestore && saved.has(targetSel)) {
         item.classList.add('open');
         item.classList.remove('opening', 'closing');
       }
@@ -91,31 +95,25 @@
   // ---------- Current page highlighting ----------
   // Mark the current link and open JUST its parent group (if any).
   function markActiveAndOpen() {
-  // filename like 'about.html' or 'moroccan-lamp.html'
-  const here = location.pathname.split('/').pop();
+    const here = location.pathname.split('/').pop();
+    document.querySelectorAll('.side-nav a.active').forEach(a => a.classList.remove('active'));
 
-  // clear any previous “active”
-  document.querySelectorAll('.side-nav a.active').forEach(a => a.classList.remove('active'));
+    let matched = null;
+    document.querySelectorAll('.side-nav a').forEach(link => {
+      const href = link.getAttribute('href') || '';
+      if (href.endsWith(here)) {
+        link.classList.add('active');
+        matched = link;
+      }
+    });
 
-  let matched = null;
-  document.querySelectorAll('.side-nav a').forEach(link => {
-    const href = link.getAttribute('href') || '';
-    if (href.endsWith(here)) {
-      link.classList.add('active');
-      matched = link;
-    }
-  });
-
-  // If the current page is a sub-item, just open ITS group; leave others alone.
-  if (matched) {
-    const group = matched.closest('.has-children');
+    const group = matched && matched.closest('.has-children');
     if (group) {
       group.classList.add('open');
       group.classList.remove('opening','closing');
       saveOpenTargets();
     }
   }
-}
 
   // ---------- Micro "reveal" on scroll (safe) ----------
   function setupRevealOnScroll() {
@@ -151,27 +149,39 @@
 
   // ---------- Init ----------
   function init() {
-    setupSidebarToggles();
+    // Decide whether to suppress opening anything:
+    // - first visit ever (no VISITED_KEY)
+    // - OR coming from a logo click (SESSION_COLLAPSE set)
+    const firstVisit = !localStorage.getItem(VISITED_KEY);
+    const collapseFromLogo = sessionStorage.getItem(SESSION_COLLAPSE) === '1';
+    const suppressOpen = firstVisit || collapseFromLogo;
+
+    // Setup toggles; skip restoring saved groups when suppressing
+    setupSidebarToggles(/* skipRestore */ suppressOpen);
+
     setupRevealOnScroll();
     fadeInOnLoad();
 
-    // If we arrived here after clicking the logo, force-collapse once
-    if (sessionStorage.getItem('collapseSidebar') === '1') {
+    if (suppressOpen) {
+      // keep everything closed on first load and after logo click
       collapseAll();
-      sessionStorage.removeItem('collapseSidebar');
+      sessionStorage.removeItem(SESSION_COLLAPSE);
+    } else {
+      // normal behavior: open the parent group of the active page
+      markActiveAndOpen();
     }
 
-    // Highlight the current link and open only its parent group (if any)
-    markActiveAndOpen();
-
-    // Clicking the logo: collapse now and also collapse on the next page load
+    // Clicking the logo: collapse now and also on the next page load
     const logo = document.querySelector('.site-logo');
     if (logo) {
       logo.addEventListener('click', () => {
         collapseAll();
-        sessionStorage.setItem('collapseSidebar', '1');
+        sessionStorage.setItem(SESSION_COLLAPSE, '1');
       });
     }
+
+    // Mark that the user has visited at least once
+    localStorage.setItem(VISITED_KEY, '1');
   }
 
   if (document.readyState === 'loading') {
