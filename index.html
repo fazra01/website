@@ -17,9 +17,15 @@
 </head>
 
 <body class="page-home">
-
+  <a href="index.html" class="mobile-logo">FADI AZRA</a>
+  <button id="menuToggle" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+    <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="site-overlay"></div>
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside id="sidebar" class="sidebar">
     <a class="site-logo" href="./index.html">FADI AZRA</a>
 
     <nav class="side-nav">
@@ -29,9 +35,9 @@
     <li class="has-children">
       <button class="nav-head" type="button" data-target="#art-sub">Art</button>
       <ul id="art-sub" class="subnav">
+        <li><a href="./artist-statement/artist_statement.html">Artist Statement</a></li>
         <li><a href="./painting-series/painting-series.html">Painting Series</a></li>
         <li><a href="./stop-motion/stop-motion.html">Stop-Motion</a></li>
-        <li><a href="./artist-statement/artist_statement.html">Artist Statement</a></li>
       </ul>
     </li>
 
@@ -40,8 +46,8 @@
       <button class="nav-head" type="button" data-target="#eng-sub">Engineering</button>
       <ul id="eng-sub" class="subnav">
         <li><a href="./moroccan-lamp/moroccan-lamp.html">Moroccan Lamp</a></li>
-        <li><a href="./griffin-msi-internship/griffin-msi-internship.html">Griffin MSI Internship</a></li>
-        <li><a href="./corpse-bride/corpse-bride.html">Corpse Bride</a></li>
+        <li><a href="./griffin-msi-internship/griffin-msi-internship.html">MSI Design Renderings</a></li>
+        <li><a href="./corpse-bride/corpse-bride.html">Corpse Bride Study</a></li>
       </ul>
     </li>
 
@@ -67,8 +73,10 @@
   <!-- Main stage area -->
   <main class="stage">
     <figure class="home-hero">
-      <img src="assets/img/home-hero.jpeg" alt="Selected work" />
-    </figure>
+  <a href="./painting-series/painting-series.html" class="hero-link" aria-label="Go to Painting Series">
+    <img src="assets/img/home-hero.jpeg" alt="Selected work" class="home-hero-img">
+  </a>
+</figure>
     <!--
     <section class="home-intro">
       <h1>Artist & Engineer</h1>

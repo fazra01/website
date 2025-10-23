@@ -190,3 +190,41 @@
     init();
   }
 })();
+(function(){
+  const body = document.body;
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menuToggle');
+  const overlay = document.querySelector('.site-overlay');
+
+  if(!sidebar || !menuBtn || !overlay) return;
+
+const openMenu = () => {
+  sidebar.classList.add('open');
+  body.classList.add('menu-open');
+  menuBtn.setAttribute('aria-expanded', 'true');
+  overlay.classList.add('is-visible');     // ← show with class
+};
+
+const closeMenu = () => {
+  sidebar.classList.remove('open');
+  body.classList.remove('menu-open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  overlay.classList.remove('is-visible');  // ← hide with class
+};
+
+  const toggleMenu = () => (sidebar.classList.contains('open') ? closeMenu() : openMenu());
+
+menuBtn.addEventListener('click', () => {
+  if (sidebar.classList.contains('open')) { closeMenu(); }
+  else { openMenu(); }
+});
+
+// attach ONCE, outside the click handler
+overlay.addEventListener('click', closeMenu);
+
+  // Close after tapping any sidebar link (good mobile UX)
+  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setTimeout(closeMenu, 0)));
+
+  // Ensure closed on first load
+  closeMenu();
+})();

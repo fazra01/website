@@ -775,3 +775,315 @@ a.nav-head.single.active:hover {
   text-decoration: none;    /* no underline */
   font-weight: 500;         /* not bold */
 }
+/* ===== Mobile drawer + centered content ===== */
+.menu-btn{
+  display:none;
+  position:fixed;
+  left:12px;
+  top:12px;
+  z-index:1002;
+  background:transparent;
+  border:0;
+  padding:6px;
+  line-height:0;
+  cursor:pointer;
+}
+.site-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.28);
+  backdrop-filter:blur(2px);
+  z-index:1001;
+}
+
+/* Phones and small tablets */
+@media (max-width:900px){
+  /* show the hamburger */
+  .menu-btn{ display:inline-flex; align-items:center; justify-content:center; }
+
+  /* any page using the sidebar becomes single-column */
+  body.with-sidebar{ display:block; }
+
+  /* turn sidebar into a left drawer (hidden by default) */
+  #sidebar.sidebar{
+    position:fixed;
+    top:0; left:0;
+    height:100dvh;
+    width:280px;
+    transform:translateX(-100%);
+    transition:transform .22s ease;
+    z-index:1003;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    background:var(--bg);
+    border-right:1px solid rgba(0,0,0,.06);
+    padding:32px 24px 24px;
+  }
+  #sidebar.sidebar.open{ transform:translateX(0); }
+
+  /* center the main content column */
+  .with-sidebar .stage,
+  .with-sidebar main,
+  .with-sidebar .page-content{
+    width:100%;
+    max-width:720px;     /* adjust if you want wider/narrower */
+    margin:0 auto;       /* centers */
+    padding:0 16px 56px; /* side gutters + bottom space */
+    box-sizing:border-box;
+  }
+
+  /* prevent background scroll when drawer is open */
+  body.menu-open{ overflow:hidden; touch-action:none; }
+
+  /* give room so the button doesn't overlap a header/logo if you have one */
+  header{ padding-left:44px; }
+    /* ===== HOME (page-home) on phones: remove the 2-col grid and center content ===== */
+  body.page-home { display: block; }          /* stop using the 2-col grid */
+  .page-home { grid-template-columns: none; } /* no reserved 280px column */
+
+  .page-home .stage {
+    width: 100%;
+    max-width: 720px;      /* tweak if you want wider/narrower */
+    margin: 0 auto;        /* center horizontally */
+    padding: 0 16px;       /* side gutters */
+    box-sizing: border-box;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce){
+  #sidebar.sidebar{ transition:none; }
+}
+
+@supports (padding: max(0px)){
+  .menu-btn{ left:max(12px, env(safe-area-inset-left)); top:max(12px, env(safe-area-inset-top)); }
+  #sidebar.sidebar{ padding-top:max(24px, env(safe-area-inset-top)); }
+}
+/* home painting click area */
+.home-hero a {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.home-hero a img {
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+/* ===== Home hero hover overlay ===== */
+.home-hero { position: relative; display: inline-block; }
+.hero-link { display: inline-block; position: relative; outline: none; }
+.home-hero-img { display: block; width: 100%; height: auto; transition: transform .35s ease, opacity .35s ease; }
+
+
+/* base overlay */
+.hero-overlay{
+  position: absolute; inset: 0;
+  display: grid; place-content: center;      /* default centering; variants will override */
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease, transform .35s ease;
+  padding: 1rem; text-align: left;
+  color: rgba(0,0,0,.85);                     /* adjust for your image; use #111 or #fff if needed */
+  mix-blend-mode: normal;                     /* keep it clean; change to 'difference' for experimental */
+}
+
+.hero-overlay .overlay-line{ font-size: clamp(16px, 2.6vw, 28px); line-height: 1.1; }
+.hero-overlay .overlay-line.small{ font-size: clamp(14px, 2.1vw, 22px); opacity: .9; }
+
+/* show overlay on hover/focus; dim image just a touch */
+@media (hover:hover){
+  .hero-link:hover .home-hero-img,
+  .hero-link:focus-visible .home-hero-img{
+    transform: none !important;
+    opacity: 1 !important;   /* or 0.96 if you like a tiny fade */
+  }
+}
+
+/* Accessible fallback for touch devices (no hover):
+   keep image normal and reveal a subtle bottom label instead (handled in Option B) */
+@media (hover: none) {
+  .overlay--center { opacity: 1; } /* if you prefer always-visible on mobile, keep this; or remove to hide */
+}
+
+/* ---------- VARIANTS (pick one by setting the overlay class) ---------- */
+
+/* OPTION A: overlay--center (centered title card) */
+.overlay--center { place-content: center; }
+.overlay--center { text-align: left; }
+
+/* OPTION B: overlay--label (bottom-left label that slides up) */
+.overlay--label{
+  place-content: end start;                   /* bottom-left */
+  transform: translateY(10px);
+}
+@media (hover: hover) {
+  .hero-link:hover .overlay--label,
+  .hero-link:focus-visible .overlay--label { transform: translateY(0); }
+}
+.overlay--label .overlay-line { background: rgba(255,255,255,.85); padding: .15rem .4rem; display: inline-block; }
+.overlay--label { color: #111; }              /* darker text over light chips */
+
+/* OPTION C: overlay--underline (minimal, with an underline animating under the last line) */
+.overlay--underline { place-content: center; text-align: left; }
+.overlay--underline .overlay-line.small{
+  position: relative; display: inline-block;
+}
+.overlay--underline .overlay-line.small::after{
+  content:""; position:absolute; left:0; right:0; bottom:-4px; height:1px;
+  background: currentColor; transform: scaleX(0); transform-origin:left;
+  transition: transform .35s ease;
+}
+@media (hover:hover){
+  .hero-link:hover .overlay--split,
+  .hero-link:focus-visible .overlay--split{
+    opacity:1;
+  }
+
+  /* no zoom, just a gentle fade */
+  .hero-link:hover .home-hero-img,
+  .hero-link:focus-visible .home-hero-img{
+    opacity:0.96;
+    transform:none;
+  }
+}
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce){
+  .home-hero-img, .hero-overlay, .overlay--label .overlay-line.small::after { transition: none; }
+}
+/* ===== Split overlay refined ===== */
+.overlay--split{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .4s ease;
+  color:#fff;
+  text-shadow:0 1px 10px rgba(0,0,0,.25);
+  font-family:var(--heading-font, Georgia, "Times New Roman", serif);
+}
+.overlay--split{
+  color:rgba(255,255,255,0.9);
+  text-shadow:0 1px 6px rgba(0,0,0,0.25);
+}
+/* lighter, calmer typography */
+.overlay--split .overlay-line{
+  font-weight:400;          /* not bold */
+  line-height:1.1;
+  letter-spacing:0.3px;
+}
+
+.overlay--split .overlay-line.small{
+  font-weight:400;
+  font-size:clamp(14px,1.5vw,19px);
+  opacity:.9;
+}
+
+/* left group (Art + Engineering) */
+.overlay--split .overlay-left{
+  position:absolute;
+  top:5%;       /* move up */
+  left:34%;      /* move left, onto lilac corner */
+  text-align:left;
+  font-size:clamp(17px,2vw,26px);
+}
+
+/* right group (in Dialogue) */
+.overlay--split .overlay-right{
+  position:absolute;
+  top:10%;       /* slightly lower than the left group */
+  right:10%;     /* adjust until it visually aligns with "Engineering" */
+  text-align:right;
+  font-size:clamp(15px,1.5vw,20px);
+}
+
+/* hover reveal */
+@media (hover:hover){
+  .hero-link:hover .overlay--split,
+  .hero-link:focus-visible .overlay--split{opacity:1;}
+  .hero-link:hover .home-hero-img,
+  .hero-link:focus-visible .home-hero-img{opacity:.96;transform:scale(1.01);}
+}
+
+/* visible on touch */
+@media (hover:none){.overlay--split{opacity:1;}}
+
+/* ===== MOBILE LOGO: match desktop FADI AZRA ===== */
+.mobile-logo {
+  display: none;
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 2000;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  color: #000;
+  font-weight: 400; /* same visual thickness as sidebar logo */
+  transition: color 0.2s ease; /* identical timing to .site-logo */
+}
+
+.mobile-logo:hover {
+  color: #ff69b4; /* same hover pink as .site-logo */
+  font-weight: inherit; /* prevents any bold flicker */
+}
+
+/* show only on small screens */
+@media (max-width: 900px) {
+  .mobile-logo {
+    display: block;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+  }
+}
+
+/* fade-out when menu opens */
+body.menu-open .mobile-logo {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+/* Hamburger button: fade out while menu is open */
+.menu-btn{
+  transition: opacity var(--fade) ease, transform .25s ease;
+}
+body.menu-open .menu-btn{
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.site-overlay{
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--fade) ease, visibility 0s linear var(--fade);
+}
+.site-overlay.is-visible{
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--fade) ease;
+}
+
+/* Fade out hamburger and logo when menu opens */
+.menu-btn { transition: opacity var(--fade) ease; }
+body.menu-open .menu-btn { opacity: 0; pointer-events: none; }
+/* === Home: restrict tap/click to only the image itself === */
+.page-home .home-hero { 
+  pointer-events: none !important;           /* ignore taps on the flex wrapper */
+}
+.page-home .home-hero .hero-link,
+.page-home .home-hero .hero-link * {
+  pointer-events: auto !important;           /* re-enable only on the link & its children */
+}
+
+/* ensure the link box = image box exactly (no stray whitespace) */
+.page-home .home-hero .hero-link { 
+  display: inline-block !important; 
+  line-height: 0;                             /* removes inline gaps */
+}
+.page-home .home-hero .hero-link img { 
+  display: block !important;                  /* no inline whitespace */
+}
