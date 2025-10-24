@@ -623,8 +623,7 @@ body.with-sidebar img.art-img{
 .statement,
 .gallery,
 .art-card,
-.wrap,
-.stage {
+.wrap {
   width: min(92vw, 1100px);
   margin-inline: auto;
 }
@@ -1029,4 +1028,122 @@ body.menu-open .menu-btn{
 }
 .page-home .home-hero .hero-link img { 
   display: block !important;                  /* no inline whitespace */
+}
+/* ===== iPad/tablet centering fix: use % of the right column, not vw ===== */
+@media (min-width: 900px) and (max-width: 1300px) {
+  /* Stage stays full-width of its grid column */
+  body.with-sidebar .stage { 
+    width: 100%;
+    padding: 40px 24px 56px; /* a little narrower padding feels nicer on iPad */
+  }
+
+  /* Any inner block that previously used 92vw: make it 92% of the column */
+  body.with-sidebar .hero,
+  body.with-sidebar .section,
+  body.with-sidebar .statement,
+  body.with-sidebar .gallery,
+  body.with-sidebar .art-card,
+  body.with-sidebar .art-media,
+  body.with-sidebar .art-grid,
+  body.with-sidebar .intro,
+  body.with-sidebar .intro-grid,
+  body.with-sidebar .video-container,
+  body.with-sidebar .media3,
+  body.with-sidebar .wrap {
+    width: min(92%, var(--maxw)) !important;
+    margin-inline: auto;
+  }
+}
+@media (min-width: 900px) and (max-width: 1300px){
+  body.with-sidebar .art-info,
+  body.with-sidebar hr.divider,
+  body.with-sidebar .art-grid,
+  body.with-sidebar .intro,
+  body.with-sidebar .intro-text {
+    width: min(92%, var(--maxw)) !important;
+    margin-inline: auto !important;
+  }
+}
+/* iPad/tablet fix for multi-image layouts (Moroccan Lamp) */
+@media (min-width: 900px) and (max-width: 1300px){
+  /* make the grid width relative to the right column, not the viewport */
+  body.with-sidebar .grid{
+    width: min(92%, var(--maxw)) !important;
+    margin-inline: auto !important;
+    justify-items: center;           /* keeps thumbs centered in each cell */
+  }
+
+  /* optional: match the same rule for other multi-image sections if needed */
+  body.with-sidebar .art-grid{
+    width: min(92%, var(--maxw)) !important;
+    margin-inline: auto !important;
+  }
+}
+/* iPad/tablet: About fits the right column and uses a flexible first column */
+@media (min-width: 900px) and (max-width: 1300px){
+  body.with-sidebar section.about{
+    width: min(92%, var(--maxw)) !important;     /* column-relative width */
+    margin-inline: auto !important;
+    grid-template-columns: minmax(300px, 38%) 1fr; /* was 420px; now flexible */
+    gap: clamp(16px, 3vw, 28px);
+  }
+
+  /* let the portrait scale to its column */
+  body.with-sidebar section.about .portrait{
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* ===== Home hero: center and constrain by the right column ===== */
+body.page-home .stage {
+  display: grid;           /* easy centering */
+  place-items: center;     /* centers the hero horizontally & vertically */
+  padding: 0;              /* you already do this, safe to keep */
+}
+
+/* The hero container should be limited by the column, not the viewport */
+body.page-home .home-hero {
+  margin: 0 auto;
+  width: min(92%, var(--maxw));
+}
+
+/* Make the link fill the container so the image can be 100% width */
+body.page-home .home-hero .hero-link {
+  display: block;
+  width: 100%;
+}
+
+/* Final image sizing: never exceed the container; only up to 90vh tall */
+body.page-home .home-hero .home-hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  object-fit: contain;
+  margin: 0 auto;          /* belt-and-suspenders centering */
+}
+
+/* iPad/tablet: a tiny bit of inner margin so it isn't edge-to-edge */
+@media (min-width: 900px) and (max-width: 1300px){
+  body.page-home .home-hero { width: min(92%, var(--maxw)); }
+}
+/* === In-content links on the right column (e.g., "Download PDF") === */
+/* This will NOT touch the sidebar/nav because those aren't inside .stage */
+.stage a,
+.stage .btn,
+.stage .footer-link {
+  font-family: "Playfair Display", Georgia, serif; /* make them all match */
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color .25s ease, text-decoration-color .25s ease;
+}
+
+.stage a:hover,
+.stage .btn:hover,
+.stage .footer-link:hover {
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
