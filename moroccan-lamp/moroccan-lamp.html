@@ -192,59 +192,6 @@
     <img id="lbImg" alt="" />
     <div class="lb-caption" id="lbCap"></div>
   </div>
-
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-  /* A) auto-tag elements to reveal */
-  const selectors = [
-    'header.hero','section','.art-title','.intro-copy','.btn-row',
-    '.art-media','.meta','.grid figure','hr.divider','footer'
-  ];
-  const targets = document.querySelectorAll(selectors.join(', '));
-  targets.forEach(el => el.classList.add('reveal'));
-
-  // optional: gentle stagger for figure cards
-  document.querySelectorAll('.grid').forEach(grid => {
-    grid.querySelectorAll('figure').forEach((el,i)=>{
-      el.style.transitionDelay = (i*60)+'ms';
-    });
-  });
-
-  /* B) respect reduced motion */
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    targets.forEach(el => el.classList.add('in'));
-    return;
-  }
-
-  /* C) one-time rise-in only (no fading) */
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(e => {
-      const r = e.intersectionRatio; // 0..1
-      if (r > 0.12) {
-        e.target.classList.add('in');
-        obs.unobserve(e.target); // lock it once revealed
-      }
-    });
-  }, { threshold: [0, .12], rootMargin: '0px 0px -8% 0px' });
-
-  targets.forEach(el => io.observe(el));
-
-  /* D) existing lightbox hooks (unchanged) */
-  document.getElementById('year').textContent = new Date().getFullYear();
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  const lbCap = document.getElementById('lbCap');
-  const lbClose = document.getElementById('lbClose');
-  function openLB(src, cap, alt){ lbImg.src=src; lbImg.alt=alt||''; lbCap.textContent=cap||''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); }
-  function closeLB(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); lbImg.src=''; }
-  lbClose?.addEventListener('click', closeLB);
-  lb?.addEventListener('click', (e)=>{ if(e.target===lb) closeLB(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLB(); });
-  document.querySelectorAll('.thumb').forEach(img=>{
-    img.addEventListener('click', ()=> openLB(img.dataset.full||img.src, img.dataset.cap||img.alt, img.alt));
-  });
-});
-</script>
 </main>
 </body>
 </html>

@@ -242,3 +242,62 @@ overlay.addEventListener('click', closeMenu);
   // Ensure closed on first load
   closeMenu();
 })();
+// ==== Global reveal initializer (runs on every page) ====
+(function () {
+  if (window.__revealInit) return;          // don't run twice
+  window.__revealInit = true;
+
+  const DEFAULT_SELECTORS = [
+    'header.hero',
+    'section',
+    '.art-title',
+    '.statement .copy',
+    '.intro-copy',
+    '.btn-row',
+    '.art-card',
+    '.art-media',
+    '.art-info',
+    '.art-grid img',
+    '.grid figure',
+    'hr.divider',
+    'footer',
+    '[data-reveal]'                          // opt-in handle
+  ];
+
+  // Skip the home page if you don't want reveal there
+  const isHome = document.body.classList.contains('page-home');
+  if (isHome) return;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const targets = document.querySelectorAll(DEFAULT_SELECTORS.join(', '));
+    targets.forEach(el => el.classList.add('reveal'));
+
+    // tiny stagger for thumbnails/cards
+    document.querySelectorAll('.art-grid, .grid').forEach(grid => {
+      grid.querySelectorAll('img, figure').forEach((el, i) => {
+        el.style.transitionDelay = (i * 60) + 'ms';
+      });
+    });
+
+    // Respect reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      targets.forEach(el => el.classList.add('in'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.intersectionRatio > 0.12) {
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: [0, .12], rootMargin: '0px 0px -8% 0px' });
+
+    targets.forEach(el => io.observe(el));
+
+    // Year stamp helper (kept here so you can remove inline copies)
+    const y = document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+  });
+})();

@@ -175,41 +175,6 @@
 
     <footer>© <span id="year"></span> Fadi Azra — Engineering</footer>
   </main>
-
-  <!-- Page-specific script moved to the end -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const selectors = [
-        'header.hero','section','.art-title','.statement .copy',
-        '.art-card','.art-media','.art-info','.art-grid img','hr.divider','footer'
-      ];
-      const targets = document.querySelectorAll(selectors.join(', '));
-      targets.forEach(el => el.classList.add('reveal'));
-
-      document.querySelectorAll('.art-grid').forEach(grid => {
-        grid.querySelectorAll('img').forEach((el,i)=>{ el.style.transitionDelay = (i*60)+'ms'; });
-      });
-
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        targets.forEach(el => el.classList.add('in'));
-        return;
-      }
-
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(e => {
-          if (e.intersectionRatio > 0.12) {
-            e.target.classList.add('in');
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: [0, .12], rootMargin: '0px 0px -8% 0px' });
-
-      targets.forEach(el => io.observe(el));
-
-      const y = document.getElementById('year');
-      if (y) y.textContent = new Date().getFullYear();
-    });
-  </script>
 </body>
 
 </html>

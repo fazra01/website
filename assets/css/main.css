@@ -210,7 +210,7 @@ section.about{
 }
 
 /* ---------- Reveal micro-animation (safe) ---------- */
-.reveal{ transform: translateY(8px); transition: transform 1.30s ease; will-change: transform; }
+.reveal{ transform: translateY(4px); transition: transform .45s ease; will-change: transform; }
 .reveal.in{ transform: none; }
 .art-media.reveal, .art-media.reveal.in{ transform: none !important; }
 @media (prefers-reduced-motion: reduce){ .reveal{ transform:none !important; transition:none !important; } }
