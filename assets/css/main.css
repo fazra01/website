@@ -241,7 +241,7 @@ footer{
   border: 1px solid var(--line);
 }
 
-@media (max-width: 900px){
+@media (max-width: 1023px){
   #about.intro{
     grid-template-columns: 1fr;
     gap: 20px;
@@ -303,10 +303,12 @@ a:hover {
   text-decoration-color: #000;     /* black underline */
   text-underline-offset: 2px;      /* neat spacing under text */
 }
-.page-home{
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr); /* sidebar + content */
-  min-height: 100vh;
+@media (min-width:1023px){
+  .page-home{
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    min-height: 100vh;
+  }
 }
 
 /* Put each piece in its column */
@@ -543,46 +545,52 @@ a.nav-head.single:hover{
 .social-icons a:hover {
   color: #000;
 }
-/* iPad/tablet only: let stage span the column with tighter padding */
-@media (min-width: 900px) and (max-width: 1300px){
+
+/* Base: centered, fixed readable width */
+.with-sidebar .stage{
+  width: min(92vw, var(--maxw));
+  margin-inline: auto;
+  padding: 40px 4vw 56px;
+}
+
+/* Phones + iPad portrait: full width of column with inner gutters */
+@media (max-width: 1023px){
   .with-sidebar .stage{
     width: 100%;
-    margin: 0;
-    padding: 40px 24px 56px;   /* keep some breathing room */
-    background: var(--bg);
+    max-width: 720px;       /* visual center column */
+    margin: 0 auto;
+    padding: 0 16px 56px;
+    box-sizing: border-box;
   }
 }
 
-/* Make the whole <main class="stage"> a centered, fixed-width column */
-.with-sidebar .stage{
-  width: min(92vw, 1100px);   /* your readable width */
-  margin-inline: auto;        /* centers it inside the right column */
-  padding: 40px 4vw 56px;     /* keep your nice padding */
+/* iPad landscape to small desktop: fill the right column and keep nice padding */
+@media (min-width: 1023px) and (max-width: 1300px){
+  .with-sidebar .stage{
+    width: 100%;
+    margin: 0;
+    padding: 40px 24px 56px;
+  }
 }
 
-/* Ensure inner blocks just fill that centered column (undo earlier per-child centering) */
-body.with-sidebar{
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  min-height: 100vh;
-}
 
-/* hard-center the whole right column content */
-/* Phones only: allow stage to be full width */
-@media (max-width: 900px){
-  body.with-sidebar > .stage{
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+/* Sidebar grid only from 1023px up */
+@media (min-width: 1023px){
+  body.with-sidebar{
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    min-height: 100vh;
   }
 }
 
 /* make sure cards/images don't overflow that width */
-body.with-sidebar .gallery,
-body.with-sidebar .art-card,
-body.with-sidebar .art-media{
-  width: min(92vw, var(--maxw));
-  margin-inline: auto;
+@media (min-width: 1024px){
+  body.with-sidebar .gallery,
+  body.with-sidebar .art-card,
+  body.with-sidebar .art-media{
+    width: min(92vw, var(--maxw));
+    margin-inline: auto;
+  }
 }
 body.with-sidebar img.art-img{
   display: block;
@@ -624,14 +632,16 @@ body.with-sidebar img.art-img{
 
 /* push the nav down so 'Art' doesn't overlap the logo */
 .page-home .side-nav{ margin-top: 56px; }
-.hero,
-.section,
-.statement,
-.gallery,
-.art-card,
-.wrap {
-  width: min(92vw, 1100px);
-  margin-inline: auto;
+@media (min-width: 1024px){
+  .hero,
+  .section,
+  .statement,
+  .gallery,
+  .art-card,
+  .wrap {
+    width: min(92vw, 1100px);
+    margin-inline: auto;
+  }
 }
 
 /* unified top spacing for every page header */
@@ -748,7 +758,7 @@ a.nav-head.single.active:hover {
 }
 
 /* Phones and small tablets */
-@media (max-width:900px){
+@media (max-width:1023px){
   /* show the hamburger */
   .menu-btn{ display:inline-flex; align-items:center; justify-content:center; }
 
@@ -798,7 +808,26 @@ a.nav-head.single.active:hover {
     padding: 0 16px;       /* side gutters */
     box-sizing: border-box;
   }
-
+    body.with-sidebar header.hero,
+  body.with-sidebar .hero,
+  body.with-sidebar .section,
+  body.with-sidebar section.statement,
+  body.with-sidebar .gallery,
+  body.with-sidebar .art-card,
+  body.with-sidebar .art-media,
+  body.with-sidebar .art-info,
+  body.with-sidebar .art-grid,
+  body.with-sidebar .intro,
+  body.with-sidebar .intro-grid,
+  body.with-sidebar .video-container,
+  body.with-sidebar .media3,
+  body.with-sidebar .wrap,
+  body.with-sidebar .grid,
+  body.with-sidebar section.about {
+    width: 100% !important;
+    max-width: 720px;
+    margin-inline: auto !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -981,7 +1010,7 @@ a.nav-head.single.active:hover {
 }
 
 /* show only on small screens */
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .mobile-logo {
     display: block;
     left: 50%;
@@ -1035,71 +1064,8 @@ body.menu-open .menu-btn{
 .page-home .home-hero .hero-link img { 
   display: block !important;                  /* no inline whitespace */
 }
-/* ===== iPad/tablet centering fix: use % of the right column, not vw ===== */
-@media (min-width: 900px) and (max-width: 1300px) {
-  /* Stage stays full-width of its grid column */
-  body.with-sidebar .stage { 
-    width: 100%;
-    padding: 40px 24px 56px; /* a little narrower padding feels nicer on iPad */
-  }
 
-  /* Any inner block that previously used 92vw: make it 92% of the column */
-  body.with-sidebar .hero,
-  body.with-sidebar .section,
-  body.with-sidebar .statement,
-  body.with-sidebar .gallery,
-  body.with-sidebar .art-card,
-  body.with-sidebar .art-media,
-  body.with-sidebar .art-grid,
-  body.with-sidebar .intro,
-  body.with-sidebar .intro-grid,
-  body.with-sidebar .video-container,
-  body.with-sidebar .media3,
-  body.with-sidebar .wrap {
-    width: min(92%, var(--maxw)) !important;
-    margin-inline: auto;
-  }
-}
-@media (min-width: 900px) and (max-width: 1300px){
-  body.with-sidebar .art-info,
-  body.with-sidebar hr.divider,
-  body.with-sidebar .art-grid,
-  body.with-sidebar .intro,
-  body.with-sidebar .intro-text {
-    width: min(92%, var(--maxw)) !important;
-    margin-inline: auto !important;
-  }
-}
-/* iPad/tablet fix for multi-image layouts (Moroccan Lamp) */
-@media (min-width: 900px) and (max-width: 1300px){
-  /* make the grid width relative to the right column, not the viewport */
-  body.with-sidebar .grid{
-    width: min(92%, var(--maxw)) !important;
-    margin-inline: auto !important;
-    justify-items: center;           /* keeps thumbs centered in each cell */
-  }
 
-  /* optional: match the same rule for other multi-image sections if needed */
-  body.with-sidebar .art-grid{
-    width: min(92%, var(--maxw)) !important;
-    margin-inline: auto !important;
-  }
-}
-/* iPad/tablet: About fits the right column and uses a flexible first column */
-@media (min-width: 900px) and (max-width: 1300px){
-  body.with-sidebar section.about{
-    width: min(92%, var(--maxw)) !important;     /* column-relative width */
-    margin-inline: auto !important;
-    grid-template-columns: minmax(300px, 38%) 1fr; /* was 420px; now flexible */
-    gap: clamp(16px, 3vw, 28px);
-  }
-
-  /* let the portrait scale to its column */
-  body.with-sidebar section.about .portrait{
-    max-width: none;
-    width: 100%;
-  }
-}
 
 /* ===== Home hero: center and constrain by the right column ===== */
 body.page-home .stage {
@@ -1128,11 +1094,6 @@ body.page-home .home-hero .home-hero-img {
   max-height: 90vh;
   object-fit: contain;
   margin: 0 auto;          /* belt-and-suspenders centering */
-}
-
-/* iPad/tablet: a tiny bit of inner margin so it isn't edge-to-edge */
-@media (min-width: 900px) and (max-width: 1300px){
-  body.page-home .home-hero { width: min(92%, var(--maxw)); }
 }
 /* === In-content links on the right column (e.g., "Download PDF") === */
 /* This will NOT touch the sidebar/nav because those aren't inside .stage */
@@ -1188,5 +1149,171 @@ body.page-home .home-hero .home-hero-img {
     display: grid;
     gap: 6px;
     margin-top: 8px;
+  }
+}
+/* Desktop/tablet landscape: real sidebar (no drawer transform) */
+@media (min-width: 1023px){
+  #sidebar.sidebar{
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    width: 280px;
+    transform: none !important;
+    box-shadow: none;
+    border-right: 1px solid rgba(0,0,0,.06);
+    padding: 32px 24px 24px;
+  }
+}
+/* Tablet (landscape) centering: width relative to the stage column, not viewport */
+@media (min-width: 1023px) and (max-width: 1300px){
+  body.with-sidebar .hero,
+  body.with-sidebar .section,
+  body.with-sidebar .statement,
+  body.with-sidebar .gallery,
+  body.with-sidebar .art-card,
+  body.with-sidebar .art-media,
+  body.with-sidebar .art-info,
+  body.with-sidebar hr.divider,
+  body.with-sidebar .art-grid,
+  body.with-sidebar .intro,
+  body.with-sidebar .intro-grid,
+  body.with-sidebar .intro-text,
+  body.with-sidebar .video-container,
+  body.with-sidebar .media3,
+  body.with-sidebar .wrap,
+  body.with-sidebar .grid,
+  body.with-sidebar section.about {
+    width: min(92%, var(--maxw)) !important;
+    margin-inline: auto !important;
+  }
+
+  /* About: flexible first column */
+  body.with-sidebar section.about{
+    grid-template-columns: minmax(300px, 38%) 1fr;
+    gap: clamp(16px, 3vw, 28px);
+  }
+}
+/* ===== FINAL MOBILE/TABLET CENTER LOCK — put this as the LAST rules in the file ===== */
+@media (max-width:1023px){
+  /* 1) Center the right column itself and cap it */
+  .with-sidebar .stage{
+    width: 100% !important;
+    max-width: 720px !important;
+    margin: 0 auto !important;
+    padding: 0 16px 56px !important;
+    box-sizing: border-box !important;
+
+    /* make any components that use --content stop using 92vw */
+    --content: 100% !important;
+  }
+
+  /* 2) Force all common inner wrappers to match the stage width */
+  .with-sidebar .stage header.hero,
+  .with-sidebar .stage .hero,
+  .with-sidebar .stage .section,
+  .with-sidebar .stage section.statement,
+  .with-sidebar .stage .gallery,
+  .with-sidebar .stage .art-card,
+  .with-sidebar .stage .art-media,
+  .with-sidebar .stage .art-info,
+  .with-sidebar .stage .art-grid,
+  .with-sidebar .stage .intro,
+  .with-sidebar .stage .intro-grid,
+  .with-sidebar .stage .video-container,
+  .with-sidebar .stage .media3,
+  .with-sidebar .stage .wrap,
+  .with-sidebar .stage .grid,
+  .with-sidebar .stage section.about,
+  .with-sidebar .stage hr.divider{
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+/* ===== HOME PAGE — FINAL CENTER LOCK (put last) ===== */
+
+/* keep components that rely on --content from using the viewport */
+.page-home .stage{ --content: 100% !important; }
+
+/* Desktop / iPad-landscape and up */
+@media (min-width:1023px){
+  /* Ensure the 2-col layout exists (sidebar + stage) */
+  .page-home{
+    display: grid !important;
+    grid-template-columns: 280px minmax(0,1fr) !important;
+  }
+
+  /* Center everything in the right column */
+  .page-home .stage{
+    display: grid !important;
+    place-items: center !important;   /* centers horizontally & vertically */
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Constrain the hero to a nice centered column */
+  .page-home .home-hero{
+    width: min(92%, var(--maxw)) !important;
+    margin: 0 auto !important;
+  }
+
+  /* Make the link/image fill that column exactly */
+  .page-home .home-hero .hero-link{
+    display: block !important;
+    width: 100% !important;
+    line-height: 0 !important; /* no inline gap */
+  }
+  .page-home .home-hero .home-hero-img{
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 90vh !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+  }
+}
+/* ==== HOMEPAGE FINAL CENTERING PATCH ==== */
+@media (min-width:1023px){
+  /* Keep the left rail fixed and sized */
+  .page-home .sidebar{
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 280px !important;
+    height: 100dvh !important;
+  }
+
+  /* Make the right column explicitly occupy the remaining width */
+  .page-home .stage{
+    position: fixed !important;
+    left: 280px !important;                    /* start right after the sidebar */
+    top: 0 !important;
+    width: calc(100vw - 280px) !important;     /* fill the rest of the viewport */
+    height: 100vh !important;
+
+    display: grid !important;
+    place-items: center !important;            /* <-- hard center */
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Constrain the hero nicely inside that right column */
+  .page-home .home-hero{
+    width: min(92%, var(--maxw)) !important;
+    margin: 0 auto !important;
+  }
+  .page-home .home-hero .hero-link{
+    display: block !important;
+    width: 100% !important;
+  }
+  .page-home .home-hero .home-hero-img{
+    width: 100% !important;
+    height: auto !important;
+    max-height: 90vh !important;
+    object-fit: contain !important;
   }
 }
