@@ -96,6 +96,10 @@
   // Mark the current link and open JUST its parent group (if any).
   function markActiveAndOpen() {
     const here = location.pathname.split('/').pop();
+    // On the homepage, don't mark anything active
+  if (!here || here === '/' || here === 'index.html') {
+    return;
+  }
     document.querySelectorAll('.side-nav a.active').forEach(a => a.classList.remove('active'));
 
     let matched = null;
