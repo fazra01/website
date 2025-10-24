@@ -156,9 +156,17 @@
     // Decide whether to suppress opening anything:
     // - first visit ever (no VISITED_KEY)
     // - OR coming from a logo click (SESSION_COLLAPSE set)
-    const firstVisit = !localStorage.getItem(VISITED_KEY);
-    const collapseFromLogo = sessionStorage.getItem(SESSION_COLLAPSE) === '1';
-    const suppressOpen = firstVisit || collapseFromLogo;
+    const here = location.pathname.split('/').pop();
+const onHome = !here || here === '/' || here === 'index.html';
+
+const firstVisit = !localStorage.getItem(VISITED_KEY);
+const collapseFromLogo = sessionStorage.getItem(SESSION_COLLAPSE) === '1';
+const suppressOpen = firstVisit || collapseFromLogo || onHome;
+
+// On homepage, clear saved open groups so everything starts closed
+if (onHome) {
+  localStorage.removeItem(STORAGE_KEY);
+}
 
     // Setup toggles; skip restoring saved groups when suppressing
     setupSidebarToggles(/* skipRestore */ suppressOpen);
