@@ -158,7 +158,9 @@
     // - OR coming from a logo click (SESSION_COLLAPSE set)
     const here = location.pathname.split('/').pop();
 const onHome = !here || here === '/' || here === 'index.html';
-
+  if (onHome) {
+    localStorage.removeItem('sidebarOpenGroups_v1');
+  }
 const firstVisit = !localStorage.getItem(VISITED_KEY);
 const collapseFromLogo = sessionStorage.getItem(SESSION_COLLAPSE) === '1';
 const suppressOpen = firstVisit || collapseFromLogo || onHome;
