@@ -29,16 +29,6 @@ body{
 h1,h2,h3{ font-family: "Playfair Display", Georgia, serif; font-weight:700; }
 .subhead,.subtitle{ font-family:"Playfair Display", Georgia, serif; font-style:italic; color:rgba(0,0,0,.5); }
 
-a{ color:inherit; text-decoration: underline; text-underline-offset:2px; }
-
-/* Accent links (buttons, footer links, inline nav) */
-.btn,.links a,.footer-link{
-  display:inline-block; padding:0; border:0; background:none;
-  font-family:"Playfair Display", Georgia, serif; font-weight:600;
-  color: var(--accent); text-decoration:none; transition: color .25s ease;
-}
-.btn:hover,.links a:hover,.footer-link:hover{ color:#000; text-decoration: underline; }
-
 /* ---------- Header / Page intro ---------- */
 header.hero{
   padding: 8vh 0 6vh;
@@ -374,25 +364,7 @@ a:hover {
 
 /* Subtabs */
 .has-children > a { margin-bottom: 2px; }
-.subnav {
-  list-style: none;
-  padding: 0 0 6px 0;
-  margin: 0 0 8px 0;
 
-  /* hide by default */
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-
-  /* smooth open/close */
-  transition: max-height .45s ease, opacity .30s ease;
-}
-
-/* Show when the parent group is open */
-.has-children.open > .subnav {
-  max-height: 600px; /* large enough for all items */
-  opacity: 1;
-}
 .subnav li a {
   font-weight: 500;
   color: var(--accent);
@@ -450,12 +422,7 @@ a:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-sidebar{
-  font-family: "Inter", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-}
 
-/* Root list hygiene */
-.side-nav .nav-root{ list-style: none; padding: 0; margin: 8px 0 0; }
 .has-children{ margin-bottom: 4px; }
 
 /* Section heads ("Art", "Engineering", "About") */
@@ -479,41 +446,11 @@ sidebar{
   text-decoration: none; /* no underline */
 }
 
-/* when open: stays black, no underline */
-.has-children.open > .nav-head{
-  color:#000;
-  text-decoration: none; /* no underline */
-}
-
 /* "About" behaves the same */
 a.nav-head.single:hover{
   color:#000;
   text-decoration: none; /* no underline */
 }
-
-/* Submenus (the items under Art/Engineering) */
-.subnav{
-  list-style: none;
-  padding: 0 0 6px 0;
-  margin: 0 0 10px 0;
-  display: none;                   /* collapsed by default */
-}
-.subnav li a{
-  display: block;
-  padding: 4px 0 4px 12px;         /* indent */
-  font-weight: 500;
-  color: var(--accent);
-  text-decoration: none;
-  transition: color .25s ease;
-}
-.subnav li a:hover{
-  color:#000;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-/* When a group is opened (JS adds .open), reveal submenu */
-.has-children.open .subnav{ display: block; }
 .subnav li a{
   font-family: "Playfair Display", Georgia, serif;  /* was Inter */
   font-weight: 500;
@@ -646,17 +583,13 @@ body.with-sidebar img.art-img{
   max-width: 100%;
   height: auto;
 }
-root{
-  --content-max: 1100px;   /* your main content max-width */
-  --page-pad: 32px;        /* the side padding/gutter inside the content */
-}
+
 
 
 /* when the screen is narrower than the content width, tuck it to the edge */
 @media (max-width: 700px){
   .site-logo{ left: 16px; top: 16px; }
 }
-html, body { margin: 0; }
 
 /* fixed logo — same spot as home brand */
 .site-logo{
@@ -780,11 +713,6 @@ a.nav-head.single.active:hover {
 .has-children:has(.subnav a.active) > .nav-head {
   color: #000 !important;
   font-weight: 700 !important;
-  text-decoration: none !important;
-}
-.has-children:has(.subnav a.active) > .nav-head{
-  color: var(--accent) !important;     /* pink again */
-  font-weight: 700 !important;         /* keep your section header weight */
   text-decoration: none !important;
 }
 /* Current page link in the sidebar */
@@ -1085,9 +1013,6 @@ body.menu-open .menu-btn{
   transition: opacity var(--fade) ease;
 }
 
-/* Fade out hamburger and logo when menu opens */
-.menu-btn { transition: opacity var(--fade) ease; }
-body.menu-open .menu-btn { opacity: 0; pointer-events: none; }
 /* === Home: restrict tap/click to only the image itself === */
 .page-home .home-hero { 
   pointer-events: none !important;           /* ignore taps on the flex wrapper */
