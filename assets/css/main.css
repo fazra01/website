@@ -374,7 +374,25 @@ a:hover {
 
 /* Subtabs */
 .has-children > a { margin-bottom: 2px; }
-.subnav { list-style: none; padding: 0 0 6px 0; margin: 0 0 8px 0; }
+.subnav {
+  list-style: none;
+  padding: 0 0 6px 0;
+  margin: 0 0 8px 0;
+
+  /* hide by default */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+
+  /* smooth open/close */
+  transition: max-height .45s ease, opacity .30s ease;
+}
+
+/* Show when the parent group is open */
+.has-children.open > .subnav {
+  max-height: 600px; /* large enough for all items */
+  opacity: 1;
+}
 .subnav li a {
   font-weight: 500;
   color: var(--accent);
