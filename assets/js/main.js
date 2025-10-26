@@ -301,3 +301,52 @@ overlay.addEventListener('click', closeMenu);
     if (y) y.textContent = new Date().getFullYear();
   });
 })();
+// ===== Simple Lightbox for .thumb images =====
+(function () {
+  document.addEventListener('DOMContentLoaded', () => {
+    const thumbs = document.querySelectorAll('img.thumb');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCap = document.getElementById('lbCap');
+    const lbClose = document.getElementById('lbClose');
+    if (!thumbs.length || !lb || !lbImg || !lbCap || !lbClose) return;
+
+    const open = (src, cap) => {
+      lbImg.src = src;
+      lbImg.alt = cap || '';
+      lbCap.textContent = cap || '';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lb-open');
+      window.addEventListener('keydown', onKey);
+    };
+
+    const close = () => {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lb-open');
+      lbImg.removeAttribute('src');
+      window.removeEventListener('keydown', onKey);
+    };
+
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
+
+    thumbs.forEach(img => {
+      img.style.cursor = 'zoom-in'; // harmless if already styled
+      img.addEventListener('click', () => {
+        const src = img.getAttribute('data-full') || img.src;
+        const cap = img.getAttribute('data-cap') ||
+                    (img.closest('figure')?.querySelector('figcaption')?.textContent || '');
+        open(src, cap);
+      });
+    });
+
+    // Close on X button
+    lbClose.addEventListener('click', close);
+
+    // Close when clicking the backdrop (but NOT when clicking the image)
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) close();
+    });
+  });
+})();
