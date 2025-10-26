@@ -181,8 +181,25 @@ figcaption{ font-family:"Playfair Display", Georgia, serif; font-size:.98rem; co
 .thumb{ cursor:zoom-in; }
 
 /* ---------- MSI (locked images) ---------- */
-.locked-img{ position:relative; display:inline-block; }
-.locked-img img{ opacity:.8; filter: blur(4px); pointer-events:none; }
+.locked-img{
+  position: relative;
+  display: inline-block;
+  overflow: hidden;      /* trims Chrome’s edge artifact */
+  isolation: isolate;    /* keeps any blending inside */
+}
+.locked-img img{
+  opacity: .8;
+  filter: blur(4px);               /* keep your blur here (on the IMG) */
+  pointer-events: none;
+
+  /* Chrome artifact fixes */
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1.03) translateZ(0);  /* push edges off-screen + force GPU */
+  backface-visibility: hidden;
+  will-change: transform;
+}
 .locked-img::after{
   content:"locked until public announcement";
   position:absolute; top:45%; left:0; width:100%; transform:translateY(-50%);
@@ -190,7 +207,6 @@ figcaption{ font-family:"Playfair Display", Georgia, serif; font-size:.98rem; co
   font-family:"Playfair Display", Georgia, serif;
   font-size: clamp(11px, 1vw, 15px); font-weight:500; letter-spacing:.05em;
   color:#000; text-transform:lowercase; text-align:center; pointer-events:none;
-  backdrop-filter: blur(1px); padding:.3rem 0; border-radius:4px; background:none;
 }
 
 /* ---------- About ---------- */
