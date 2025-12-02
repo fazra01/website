@@ -183,8 +183,10 @@ figcaption{ font-family:"Playfair Display", Georgia, serif; font-size:.98rem; co
 /* ---------- MSI (locked images) ---------- */
 .locked-img{
   position: relative;
-  display: inline-block;
-  overflow: hidden;      /* trims Chrome’s edge artifact */
+  display: block;        /* so it behaves like a full-width block */
+  width: 100%;           /* fill the .art-media / grid cell */
+  max-width: 100%;       /* never overflow horizontally */
+  overflow: hidden;      /* trims Chrome’s edge artifact + crop if needed */
   isolation: isolate;    /* keeps any blending inside */
 }
 .locked-img img{
