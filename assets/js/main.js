@@ -301,7 +301,7 @@ overlay.addEventListener('click', closeMenu);
     if (y) y.textContent = new Date().getFullYear();
   });
 })();
-// ===== Simple Lightbox for .thumb images =====
+// ===== Simple Lightbox for paintings =====
 (function () {
   document.addEventListener('DOMContentLoaded', () => {
     const thumbs = document.querySelectorAll('img.thumb');
@@ -309,44 +309,39 @@ overlay.addEventListener('click', closeMenu);
     const lbImg = document.getElementById('lbImg');
     const lbCap = document.getElementById('lbCap');
     const lbClose = document.getElementById('lbClose');
+
     if (!thumbs.length || !lb || !lbImg || !lbCap || !lbClose) return;
 
     const open = (src, cap) => {
       lbImg.src = src;
-      lbImg.alt = cap || '';
-      lbCap.textContent = cap || '';
+      lbCap.innerHTML = cap || '';
       lb.classList.add('open');
-      lb.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('lb-open');
-      window.addEventListener('keydown', onKey);
+      document.body.style.overflow = 'hidden';
     };
 
     const close = () => {
       lb.classList.remove('open');
-      lb.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('lb-open');
       lbImg.removeAttribute('src');
-      window.removeEventListener('keydown', onKey);
+      lbCap.innerHTML = '';
+      document.body.style.overflow = '';
     };
 
-    const onKey = (e) => { if (e.key === 'Escape') close(); };
-
-    thumbs.forEach(img => {
-      img.style.cursor = 'zoom-in'; // harmless if already styled
+    thumbs.forEach((img) => {
       img.addEventListener('click', () => {
         const src = img.getAttribute('data-full') || img.src;
-        const cap = img.getAttribute('data-cap') ||
-                    (img.closest('figure')?.querySelector('figcaption')?.textContent || '');
+        const cap = img.getAttribute('data-cap') || '';
         open(src, cap);
       });
     });
 
-    // Close on X button
     lbClose.addEventListener('click', close);
 
-    // Close when clicking the backdrop (but NOT when clicking the image)
     lb.addEventListener('click', (e) => {
       if (e.target === lb) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
     });
   });
 })();
